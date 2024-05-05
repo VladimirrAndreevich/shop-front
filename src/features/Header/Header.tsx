@@ -4,7 +4,7 @@ import { WrapperHeader } from "./styled";
 const Header: React.FC = () => {
   return (
     <WrapperHeader>
-      <Image src="/logo.svg" alt="Shop Logo" width={70} height={27} />
+      <Image src="/logo.svg" alt="Shop Logo" width={70} height={27} priority />
     </WrapperHeader>
   );
 };
