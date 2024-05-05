@@ -7,3 +7,6 @@ export const Z_INDEX_LEVEL_2 = 2;
 export const Z_INDEX_LEVEL_3 = 3;
 export const Z_INDEX_LEVEL_4 = 4;
 export const Z_INDEX_LEVEL_5 = 5;
+
+// Revalidation Pages
+export const REVALIDATION_TIME_MAIN_PAGE = 3600;

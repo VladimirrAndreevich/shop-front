@@ -17,6 +17,9 @@ dependencies:
   styled-components:
     specifier: ^6.1.9
     version: 6.1.9(react-dom@18.3.1)(react@18.3.1)
+  swiper:
+    specifier: ^11.1.1
+    version: 11.1.1
 
 devDependencies:
   '@types/node':
@@ -367,6 +370,11 @@ packages:
 
   /stylis@4.3.1:
     resolution: {integrity: sha512-EQepAV+wMsIaGVGX1RECzgrcqRRU/0sYOHkeLsZ3fzHaHXZy4DaOOX0vOlGQdlsjkh3mFHAIlVimpwAs4dslyQ==}
+    dev: false
+
+  /swiper@11.1.1:
+    resolution: {integrity: sha512-jGmEA/fNz1lACIcY4/40ggm1Gcyv+EUivmgV/Jd2WFPsEJhbWXnRAwzZR8OPjkBLtDxmzcoYG/iiAMWfRs0YKQ==}
+    engines: {node: '>= 4.7.0'}
     dev: false
 
   /tslib@2.5.0:
