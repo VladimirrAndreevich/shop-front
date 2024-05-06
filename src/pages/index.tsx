@@ -13,8 +13,6 @@ export async function getStaticProps() {
 
   const products: I_ProductsRes = await response.json();
 
-  console.log(products.data.filter((item) => item.type === E_Type.boots));
-
   const productsList = {
     sneakers: products.data.filter((item) => item.type === E_Type.sneakers),
     boots: products.data.filter((item) => item.type === E_Type.boots),

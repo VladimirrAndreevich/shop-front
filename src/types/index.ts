@@ -23,3 +23,9 @@ export interface I_UniRes {
 export interface I_ProductsRes extends I_UniRes {
   data: I_ProductCard[];
 }
+export interface I_ProductsByTypeRes extends I_UniRes {
+  data: {
+    products: I_ProductCard[];
+    amount: number;
+  };
+}
