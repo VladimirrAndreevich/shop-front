@@ -45,7 +45,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
 
   return (
     <MainWrapper>
-      {title}
+      <h2>{title}</h2>
       <GalleryWithChoice images={[mainImage, ...images]} title={title} />
       <Sizes changeSize={setActiveSize} />
       <InnerWrapper>

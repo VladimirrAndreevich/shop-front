@@ -2,18 +2,24 @@ import { I_ProductCard } from "@/types";
 import Image from "next/image";
 import { ImageWrapper } from "./styled";
 import { Price } from "../Group/styled";
+import Link from "next/link";
 
 interface I_ProductItemProps {
   data: I_ProductCard;
 }
 
 const ProductItem: React.FC<I_ProductItemProps> = ({ data }) => {
-  const { title, price } = data;
+  const { id, title, price, mainImage } = data;
 
   return (
-    <div>
+    <Link href={`/products/${id}`}>
       <ImageWrapper>
-        <Image src="/dummy.jpg" alt="Item image" fill priority />
+        <Image
+          src={`${process.env.API_URL_IMAGES}/${mainImage}`}
+          alt="Item image"
+          fill
+          priority
+        />
       </ImageWrapper>
 
       <h3>{title}</h3>
@@ -24,7 +30,7 @@ const ProductItem: React.FC<I_ProductItemProps> = ({ data }) => {
           <Price $discounted>{data.priceDiscounted} $</Price>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 

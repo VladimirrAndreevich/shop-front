@@ -4,6 +4,7 @@ export const MainImageWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 285px;
+  margin-top: 12px;
 `;
 
 export const AdditionalImagesWrapper = styled.div<{ $amount?: number }>`

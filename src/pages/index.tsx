@@ -64,7 +64,11 @@ const Home: React.FC<I_HomePageProps> = (props) => {
       </Head>
       <MainWrapper>
         {props.lists.map((list, index) => (
-          <Group title={list.title} key={index}>
+          <Group
+            title={list.title}
+            type={list.title.toLocaleLowerCase() as E_Type}
+            key={index}
+          >
             {list.products.length !== 0 ? (
               <SwiperProducts productsList={list.products} />
             ) : (
