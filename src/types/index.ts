@@ -6,7 +6,8 @@ export enum E_Type {
 
 export interface I_ProductCard {
   id: number;
-  image: string;
+  mainImage: string;
+  images: string[];
   price: number;
   priceDiscounted?: number;
   title: string;
@@ -28,4 +29,8 @@ export interface I_ProductsByTypeRes extends I_UniRes {
     products: I_ProductCard[];
     amount: number;
   };
+}
+
+export interface I_ProductRes extends I_UniRes {
+  data: I_ProductCard;
 }

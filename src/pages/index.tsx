@@ -10,6 +10,10 @@ export async function getStaticProps() {
   const response = await fetch(
     process.env.REACT_APP_API_URL + "/products/favorites"
   );
+  // TODO add error handling
+  // if (!response.ok) {
+  //   throw new Error(`HTTP error! status: ${response.status}`)
+  // }
 
   const products: I_ProductsRes = await response.json();
 
