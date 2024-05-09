@@ -34,3 +34,9 @@ export interface I_ProductsByTypeRes extends I_UniRes {
 export interface I_ProductRes extends I_UniRes {
   data: I_ProductCard;
 }
+
+export interface I_LoginRes extends I_UniRes {
+  data: {
+    accessToken: string;
+  };
+}

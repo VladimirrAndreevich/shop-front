@@ -1,13 +1,19 @@
 import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { Form, Heading, Input } from "../register/styled";
 import { FormEvent, useState } from "react";
-import { I_UniRes } from "@/types";
+import { I_LoginRes, I_UniRes } from "@/types";
 import Button from "@/components/Button/Button";
+import { observer } from "mobx-react-lite";
+import userStore from "@/store/user-store";
+import { useRouter } from "next/router";
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+
+  const { initToken } = userStore;
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,10 +34,14 @@ const LoginPage: React.FC = () => {
     if (!response.ok) {
       // throw new Error(`HTTP error! status: ${response.status}`)
       console.error(`HTTP error! status: ${response.status}`);
+    } else {
+      const formattedRes: I_LoginRes = await response.json();
+      if (formattedRes.data.accessToken) {
+        localStorage.setItem("token", formattedRes.data.accessToken);
+        initToken(formattedRes.data.accessToken);
+        router.push("/");
+      }
     }
-
-    const formattedRes: I_UniRes = await response.json();
-    console.log(formattedRes);
   };
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -73,4 +83,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default observer(LoginPage);
