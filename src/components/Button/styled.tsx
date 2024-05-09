@@ -8,4 +8,5 @@ export const Btn = styled.button`
 
   background-color: ${colors.primary};
   color: white;
+  text-transform: uppercase;
 `;
