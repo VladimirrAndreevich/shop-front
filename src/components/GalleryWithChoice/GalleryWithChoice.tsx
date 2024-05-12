@@ -17,22 +17,20 @@ const GalleryWithChoice: React.FC<GalleryWithChoiceProps> = ({
 }) => {
   const [activeImage, setActiveImage] = useState(0);
 
-  const getPath = (index: number, image: string) => {
-    return index === 0
-      ? `${process.env.API_URL_IMAGES}/${image}`
-      : `${process.env.API_URL_IMAGES}/additional/${image}`;
+  const getPath = (image: string) => {
+    return `${process.env.API_URL_IMAGES}/${image}`;
   };
 
   const additionalImages = (
     <>
       {images.map((image, index) => {
-        const pathImg = getPath(index, image);
+        const pathImg = getPath(image);
 
         return (
           <AdditionalImageBox onClick={() => setActiveImage(index)}>
             <Image
               key={index}
-              src={pathImg}
+              src={`${process.env.API_URL_IMAGES}/${image}`}
               alt={`The image of ${title}`}
               fill
               style={{
@@ -50,7 +48,7 @@ const GalleryWithChoice: React.FC<GalleryWithChoiceProps> = ({
     <>
       <MainImageWrapper>
         <Image
-          src={getPath(activeImage, images[activeImage])}
+          src={getPath(images[activeImage])}
           alt={`The image of ${title}`}
           fill
           priority
