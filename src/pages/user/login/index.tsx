@@ -4,8 +4,8 @@ import { FormEvent, useState } from "react";
 import { I_LoginRes, I_UniRes } from "@/types";
 import Button from "@/components/Button/Button";
 import { observer } from "mobx-react-lite";
-import userStore from "@/store/user-store";
 import { useRouter } from "next/router";
+import { getStoreInstance } from "@/store/user-store";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -13,7 +13,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
-  const { initToken } = userStore;
+  const userStore = getStoreInstance();
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
       const formattedRes: I_LoginRes = await response.json();
       if (formattedRes.data.accessToken) {
         localStorage.setItem("token", formattedRes.data.accessToken);
-        initToken(formattedRes.data.accessToken);
+        userStore.initToken(formattedRes.data.accessToken);
         router.push("/");
       }
     }

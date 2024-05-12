@@ -15,6 +15,14 @@ export interface I_ProductCard {
   // isLiked: boolean;
 }
 
+export interface I_CartItem {
+  id: number;
+  title: string;
+  price: number;
+  quantity: number;
+  size: string;
+}
+
 export interface I_UniRes {
   status: "ok" | "error";
   data?: any;
@@ -36,6 +44,11 @@ export interface I_ProductRes extends I_UniRes {
 }
 
 export interface I_LoginRes extends I_UniRes {
+  data: {
+    accessToken: string;
+  };
+}
+export interface I_RegisterRes extends I_UniRes {
   data: {
     accessToken: string;
   };

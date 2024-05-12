@@ -1,15 +1,16 @@
 import Image from "next/image";
 import { LinkLogo, RightContainer, WrapperHeader } from "./styled";
-import userStore from "@/store/user-store";
+import { getStoreInstance } from "@/store/user-store";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import Link from "next/link";
 
 const Header: React.FC = observer(() => {
-  const { initToken, isLogged } = userStore;
+  // const { initToken, isLogged } = userStore;
+  const userStore = getStoreInstance();
 
   useEffect(() => {
-    initToken(localStorage.getItem("token"));
+    userStore.initToken(localStorage.getItem("token"));
   }, []);
 
   return (
@@ -27,7 +28,7 @@ const Header: React.FC = observer(() => {
       </LinkLogo>
 
       <RightContainer>
-        {!isLogged && (
+        {!userStore.isLogged && (
           <Link href="/user/register">
             <Image
               src="/icons/user.svg"
@@ -38,7 +39,7 @@ const Header: React.FC = observer(() => {
             />
           </Link>
         )}
-        {isLogged && (
+        {userStore.isLogged && (
           <>
             <Link href="/user/favorites">
               <Image

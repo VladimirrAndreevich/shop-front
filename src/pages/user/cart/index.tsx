@@ -7,17 +7,21 @@ import {
 } from "./styled";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
+import { ImageDecor } from "@/components/ImageDecor/ImageDecor";
 
 const CartPage: React.FC = () => {
   return (
     <MainWrapper>
       <ContentWrapper>
-        <Image
-          src="icons/cart_empty.svg"
-          width={84}
-          height={98}
-          alt="The icon of an empty cart"
-        />
+        <ImageDecor>
+          <Image
+            src="/icons/cart_empty.svg"
+            width={84}
+            height={98}
+            alt="The icon of an empty cart"
+          />
+        </ImageDecor>
+
         <EmptyHeading>Your cart is currently empty.</EmptyHeading>
         <EmptyDescription>
           Before you proceed to checkout, you must add some items to your cart.

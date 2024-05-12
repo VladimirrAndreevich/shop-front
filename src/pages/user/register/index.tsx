@@ -2,13 +2,19 @@ import Button from "@/components/Button/Button";
 import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { FormEvent, useState } from "react";
 import { Form, Heading, Input } from "./styled";
-import { I_UniRes } from "@/types";
+import { I_RegisterRes, I_UniRes } from "@/types";
+import { observer } from "mobx-react-lite";
+import { getStoreInstance } from "@/store/user-store";
+import { useRouter } from "next/router";
 
 const RegisterPage: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+
+  const userStore = getStoreInstance();
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,10 +44,13 @@ const RegisterPage: React.FC = () => {
     if (!response.ok) {
       // throw new Error(`HTTP error! status: ${response.status}`)
       console.error(`HTTP error! status: ${response.status}`);
+    } else {
+      const formattedRes: I_RegisterRes = await response.json();
+      console.log(formattedRes);
+      localStorage.setItem("token", formattedRes.data.accessToken);
+      userStore.initToken(formattedRes.data.accessToken);
+      router.push("/");
     }
-
-    const formattedRes: I_UniRes = await response.json();
-    console.log(formattedRes);
   };
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -94,4 +103,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default observer(RegisterPage);

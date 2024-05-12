@@ -7,6 +7,8 @@ import Button from "@/components/Button/Button";
 import { InnerWrapper } from "./styled";
 import Sizes from "@/components/Sizes/Sizes";
 import { useState } from "react";
+import { observer } from "mobx-react-lite";
+import { getStoreInstance } from "@/store/user-store";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {
@@ -28,13 +30,15 @@ interface I_ProductDetailPageProps {
 }
 
 const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
+  const userStore = getStoreInstance();
+
   const [activeSize, setActiveSize] = useState(36);
 
   if (props.dataProduct === null) {
     return <MainWrapper>The product is not found</MainWrapper>;
   }
 
-  const { title, mainImage, images, price, priceDiscounted } =
+  const { id, title, mainImage, images, price, priceDiscounted } =
     props.dataProduct;
 
   const priceJSX = priceDiscounted ? (
@@ -51,10 +55,14 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
       <InnerWrapper>
         SIZE - {activeSize}
         {priceJSX}
-        <Button>Add to cart</Button>
+        <Button
+          clickHandler={() => userStore.addItemCart(id, activeSize.toString())}
+        >
+          Add to cart
+        </Button>
       </InnerWrapper>
     </MainWrapper>
   );
 };
 
-export default ProductDetailPage;
+export default observer(ProductDetailPage);
