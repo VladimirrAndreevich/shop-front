@@ -29,6 +29,10 @@ export interface I_UniRes {
   errorMessage?: string;
 }
 
+export interface I_CartRes extends I_UniRes {
+  cart: I_CartItem[];
+}
+
 export interface I_ProductsRes extends I_UniRes {
   data: I_ProductCard[];
 }

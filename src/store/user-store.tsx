@@ -1,4 +1,4 @@
-import { I_CartItem } from "@/types";
+import { I_CartItem, I_CartRes } from "@/types";
 import { makeAutoObservable } from "mobx";
 
 class UserStore {
@@ -33,6 +33,7 @@ class UserStore {
 
     const formattedResponse = await response.json();
     console.log(formattedResponse);
+    this.updateCart();
   };
 
   async addItemCart(productId: number, size: string) {
@@ -61,6 +62,29 @@ class UserStore {
     if (!response.ok) {
       throw new Error("Error adding item to cart");
     }
+
+    this.updateCart();
+  }
+
+  async updateCart() {
+    if (!this.isLogged) {
+      // throw new Error("Error access! Unauthorized.");
+      return;
+    }
+
+    const response = await fetch(`${process.env.API_URL_BACKEND}/users/cart`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error getting the cart");
+    }
+
+    const formattedResponse: I_CartRes = await response.json();
+    // console.log(formattedResponse.cart);
+    this.cart = formattedResponse.cart;
   }
 }
 
