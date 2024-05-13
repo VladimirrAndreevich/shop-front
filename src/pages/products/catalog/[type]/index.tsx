@@ -1,8 +1,9 @@
 import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { E_Type, I_ProductCard, I_ProductsByTypeRes } from "@/types";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { CardContainer } from "./styled";
 import ProductItem from "@/components/ProductItem/ProductItem";
+import MainContainer from "@/components/MainContainer/MainContainer";
+import { Grid } from "@mui/material";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -53,11 +54,21 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
 
   return (
     <MainWrapper>
-      <CardContainer>
-        {products.map((item) => (
-          <ProductItem data={item} />
-        ))}
-      </CardContainer>
+      <MainContainer>
+        {/* <CardContainer>
+          {products.map((item) => (
+            <ProductItem data={item} />
+          ))}
+        </CardContainer> */}
+
+        <Grid container spacing="20px">
+          {products.map((item, index) => (
+            <Grid item xs={6} md={4} key={index}>
+              <ProductItem data={item} />
+            </Grid>
+          ))}
+        </Grid>
+      </MainContainer>
     </MainWrapper>
   );
 };
