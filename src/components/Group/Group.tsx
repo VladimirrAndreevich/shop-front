@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { GroupHeader, GroupWrapper } from "./styled";
+import {
+  GroupHeader,
+  GroupWrapper,
+  HeadingTypography,
+  MoreButton,
+} from "./styled";
 import { E_Type } from "@/types";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 interface I_GroupProps {
   title: string;
@@ -9,11 +15,16 @@ interface I_GroupProps {
 }
 
 const Group: React.FC<I_GroupProps> = ({ title, type, children }) => {
+  const theme = useTheme();
+  const isLargeViewport = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <GroupWrapper>
       <GroupHeader>
-        <h3>{title}</h3>
-        <Link href={`/products/catalog/${type}`}>Больше</Link>
+        <HeadingTypography>{title}</HeadingTypography>
+        <MoreButton type={type}>
+          Больше {isLargeViewport && `товаров`}
+        </MoreButton>
       </GroupHeader>
       {children}
     </GroupWrapper>
