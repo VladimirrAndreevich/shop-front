@@ -73,7 +73,12 @@ const Header: React.FC = observer(() => {
   return (
     <header style={{ backgroundColor: colors.primary }}>
       <MainContainer>
-        <Box py="26px">
+        <Box
+          sx={{
+            px: { sm: "20px", md: "30px", lg: "60px", xl: "90px" },
+            py: { xs: "26px", lg: "32px" },
+          }}
+        >
           <Grid container spacing={0}>
             <Grid item xs={4}></Grid>
             <Grid item xs={4}>
