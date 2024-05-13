@@ -4,8 +4,8 @@ import SwiperProducts from "@/components/SwiperProducts/SwiperProducts";
 import { REVALIDATION_TIME_MAIN_PAGE } from "@/consts";
 import { E_Type, I_ProductCard, I_ProductsRes } from "@/types";
 import Head from "next/head";
-import { Message } from "./styled";
 import MainContainer from "@/components/MainContainer/MainContainer";
+import { Typography } from "@mui/material";
 
 export async function getStaticProps() {
   const response = await fetch(
@@ -74,7 +74,18 @@ const Home: React.FC<I_HomePageProps> = (props) => {
               {list.products.length !== 0 ? (
                 <SwiperProducts productsList={list.products} />
               ) : (
-                <Message>Empty</Message>
+                // <Message>Empty</Message>
+                <Typography
+                  variant="h5"
+                  component="h5"
+                  sx={{
+                    textAlign: "center",
+                    fontSize: { xs: "20px", md: "24px", lg: "30px" },
+                    py: { xs: "15px", md: "30px", lg: "40px" },
+                  }}
+                >
+                  Empty
+                </Typography>
               )}
             </Group>
           ))}
