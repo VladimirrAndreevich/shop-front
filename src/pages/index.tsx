@@ -5,6 +5,7 @@ import { REVALIDATION_TIME_MAIN_PAGE } from "@/consts";
 import { E_Type, I_ProductCard, I_ProductsRes } from "@/types";
 import Head from "next/head";
 import { Message } from "./styled";
+import MainContainer from "@/components/MainContainer/MainContainer";
 
 export async function getStaticProps() {
   const response = await fetch(
@@ -63,19 +64,21 @@ const Home: React.FC<I_HomePageProps> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainWrapper>
-        {props.lists.map((list, index) => (
-          <Group
-            title={list.title}
-            type={list.title.toLocaleLowerCase() as E_Type}
-            key={index}
-          >
-            {list.products.length !== 0 ? (
-              <SwiperProducts productsList={list.products} />
-            ) : (
-              <Message>Empty</Message>
-            )}
-          </Group>
-        ))}
+        <MainContainer>
+          {props.lists.map((list, index) => (
+            <Group
+              title={list.title}
+              type={list.title.toLocaleLowerCase() as E_Type}
+              key={index}
+            >
+              {list.products.length !== 0 ? (
+                <SwiperProducts productsList={list.products} />
+              ) : (
+                <Message>Empty</Message>
+              )}
+            </Group>
+          ))}
+        </MainContainer>
       </MainWrapper>
     </>
   );
