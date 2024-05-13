@@ -23,7 +23,7 @@ const Group: React.FC<I_GroupProps> = ({ title, type, children }) => {
       <GroupHeader>
         <HeadingTypography>{title}</HeadingTypography>
         <MoreButton type={type}>
-          Больше {isLargeViewport && `товаров`}
+          More {isLargeViewport && `products`}
         </MoreButton>
       </GroupHeader>
       {children}
