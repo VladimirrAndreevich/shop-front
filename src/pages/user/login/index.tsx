@@ -6,6 +6,9 @@ import Button from "@/components/Button/Button";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/router";
 import { getStoreInstance } from "@/store/user-store";
+import MainContainer from "@/components/MainContainer/MainContainer";
+import { Typography } from "@mui/material";
+import Link from "next/link";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -58,7 +61,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <MainWrapper>
+    <MainContainer sx={{ py: { xs: 3, md: 4, lg: 8 } }} maxWidth="sm">
       <Heading>Login</Heading>
       <Form onSubmit={submitHandler}>
         <Input
@@ -79,7 +82,13 @@ const LoginPage: React.FC = () => {
         />
         <Button>Login</Button>
       </Form>
-    </MainWrapper>
+      <Typography
+        component="div"
+        sx={{ textAlign: "center", mt: { xs: "6px", md: "8px", lg: "12px" } }}
+      >
+        I haven't any account. <Link href="/user/register">Register</Link>
+      </Typography>
+    </MainContainer>
   );
 };
 

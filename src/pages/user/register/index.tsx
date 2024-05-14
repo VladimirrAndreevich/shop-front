@@ -6,6 +6,9 @@ import { I_RegisterRes, I_UniRes } from "@/types";
 import { observer } from "mobx-react-lite";
 import { getStoreInstance } from "@/store/user-store";
 import { useRouter } from "next/router";
+import MainContainer from "@/components/MainContainer/MainContainer";
+import Link from "next/link";
+import { Typography } from "@mui/material";
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
@@ -70,7 +73,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <MainWrapper>
+    <MainContainer sx={{ py: { xs: 3, md: 4, lg: 8 } }} maxWidth="sm">
       <Heading>Registration</Heading>
       <Form onSubmit={submitHandler}>
         <Input
@@ -99,7 +102,13 @@ const RegisterPage: React.FC = () => {
         />
         <Button>Register</Button>
       </Form>
-    </MainWrapper>
+      <Typography
+        component="div"
+        sx={{ textAlign: "center", mt: { xs: "6px", md: "8px", lg: "12px" } }}
+      >
+        I already have an account. <Link href="/user/login">Login</Link>
+      </Typography>
+    </MainContainer>
   );
 };
 
