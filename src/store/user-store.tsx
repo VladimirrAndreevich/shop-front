@@ -5,6 +5,8 @@ class UserStore {
   isLogged = false;
   cart?: I_CartItem[];
   token?: string;
+  isAddingToCart? = false;
+  isRemovingFromCart? = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -42,6 +44,8 @@ class UserStore {
       return;
     }
 
+    this.isAddingToCart = true;
+
     const response = await fetch(
       `${process.env.API_URL_BACKEND}/users/cart/add`,
       {
@@ -63,7 +67,43 @@ class UserStore {
       throw new Error("Error adding item to cart");
     }
 
-    this.updateCart();
+    await this.updateCart();
+
+    this.isAddingToCart = false;
+  }
+
+  async removeItemCart(productId: number, size: string) {
+    if (!this.isLogged) {
+      // throw new Error("Error access! Unauthorized.");
+      return;
+    }
+
+    this.isRemovingFromCart = true;
+
+    const response = await fetch(
+      `${process.env.API_URL_BACKEND}/users/cart/remove`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify({
+          productId,
+          removeCartItemData: {
+            size,
+          },
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Error removing item to cart");
+    }
+
+    await this.updateCart();
+
+    this.isRemovingFromCart = false;
   }
 
   async updateCart() {

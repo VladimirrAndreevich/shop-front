@@ -170,7 +170,7 @@ const CartPage: React.FC = () => {
                     fontSize: "16px",
                   }}
                 >
-                  {totalPrice} €
+                  {totalPrice.toFixed(2)} €
                 </TableCell>
               </TableRow>
             </TableFooter>

@@ -21,6 +21,9 @@ export interface I_CartItem {
   price: number;
   quantity: number;
   size: string;
+  product: {
+    id: number;
+  };
 }
 
 export interface I_UniRes {

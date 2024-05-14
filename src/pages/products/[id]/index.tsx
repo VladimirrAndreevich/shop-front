@@ -5,7 +5,7 @@ import { I_ProductCard, I_ProductRes } from "@/types";
 import GalleryWithChoice from "@/components/GalleryWithChoice/GalleryWithChoice";
 import { InnerWrapper } from "./styled";
 import Sizes from "@/components/Sizes/Sizes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { getStoreInstance } from "@/store/user-store";
 import MainContainer from "@/components/MainContainer/MainContainer";
@@ -17,6 +17,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Btn from "@/components/Btn/Btn";
+import LoadingBtn from "@/components/LoadingBtn/LoadingBtn";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {
@@ -50,6 +51,12 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
 
   const { id, title, mainImage, images, price, priceDiscounted } =
     props.dataProduct;
+
+  let isRemoveButton =
+    userStore.isLogged &&
+    userStore.cart?.find(
+      (item) => item.product.id === id && item.size === activeSize.toString()
+    ) !== undefined;
 
   return (
     <MainWrapper>
@@ -113,18 +120,38 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
                   )}
                 </Stack>
               </Stack>
-              <Btn
-                clickHandler={() =>
-                  userStore.addItemCart(id, activeSize.toString())
-                }
-                sx={{
-                  py: { sm: "15px" },
-                  px: { md: "25px" },
-                  fontSize: { md: "16px", lg: "18px" },
-                }}
+              <Stack
+                direction={{ xs: "row", sm: "column-reverse", md: "row" }}
+                spacing={2}
               >
-                Add to cart
-              </Btn>
+                <LoadingBtn
+                  disabled={!isRemoveButton}
+                  loading={userStore.isRemovingFromCart}
+                  clickHandler={() =>
+                    userStore.removeItemCart(id, activeSize.toString())
+                  }
+                  sx={{
+                    py: { sm: "15px" },
+                    px: { md: "25px" },
+                    fontSize: { md: "16px", lg: "18px" },
+                  }}
+                >
+                  Remove
+                </LoadingBtn>
+                <LoadingBtn
+                  loading={userStore.isAddingToCart}
+                  clickHandler={() =>
+                    userStore.addItemCart(id, activeSize.toString())
+                  }
+                  sx={{
+                    py: { sm: "15px" },
+                    px: { md: "25px" },
+                    fontSize: { md: "16px", lg: "18px" },
+                  }}
+                >
+                  Add to cart
+                </LoadingBtn>
+              </Stack>
             </InnerWrapper>
           </Grid>
         </Grid>

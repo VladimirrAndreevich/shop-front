@@ -41,6 +41,7 @@ type ButtonProps = {
   clickHandler?: () => void;
   sx?: SxProps<Theme>;
   loading?: boolean;
+  disabled?: boolean;
 };
 
 const LoadingBtn: React.FC<ButtonProps> = ({
@@ -48,11 +49,13 @@ const LoadingBtn: React.FC<ButtonProps> = ({
   clickHandler,
   sx = [],
   loading,
+  disabled,
 }) => {
   return (
     <ThemeProvider theme={theme}>
       <LoadingButton
         loading={loading}
+        disabled={disabled}
         color="button"
         variant="contained"
         onClick={clickHandler}
