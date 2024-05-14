@@ -47,7 +47,7 @@ export const MoreButton: React.FC<{
     <Link
       href={`/products/catalog/${type}`}
       sx={{
-        fontSize: { xs: "12px", sm: "14" },
+        fontSize: { xs: "12px", sm: "14px", md: "16px", lg: "20px" },
         fontWeight: "bold",
         textDecoration: "none",
         color: colors.primary,

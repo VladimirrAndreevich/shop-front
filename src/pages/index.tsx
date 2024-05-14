@@ -64,7 +64,7 @@ const Home: React.FC<I_HomePageProps> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainWrapper>
-        <MainContainer>
+        <MainContainer sx={{ py: { md: 3, lg: 4 } }}>
           {props.lists.map((list, index) => (
             <Group
               title={list.title}

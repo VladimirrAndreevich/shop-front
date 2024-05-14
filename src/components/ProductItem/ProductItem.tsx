@@ -4,6 +4,7 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
+  Stack,
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/router";
@@ -42,7 +43,8 @@ const ProductItem: React.FC<I_ProductItemProps> = ({ data }) => {
           >
             {title}
           </Typography>
-          <Typography
+
+          {/* <Typography
             variant="body2"
             color="text.secondary"
             sx={{ color: "#3C3C3C", fontSize: "16px" }}
@@ -62,7 +64,29 @@ const ProductItem: React.FC<I_ProductItemProps> = ({ data }) => {
             >
               {Math.ceil(priceDiscounted)} $
             </Typography>
-          )}
+          )} */}
+          <Stack direction="row" spacing="10px" alignItems="center">
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: "16px", sm: "20px", md: "24px" },
+              }}
+            >
+              {price} €
+            </Typography>
+            {priceDiscounted && (
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: { xs: "12px", sm: "12px", md: "18px" },
+                  color: "#7B7B7B",
+                  textDecoration: "line-through",
+                }}
+              >
+                {priceDiscounted} €
+              </Typography>
+            )}
+          </Stack>
         </CardContent>
       </CardActionArea>
     </Card>

@@ -53,7 +53,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
 
   return (
     <MainWrapper>
-      <MainContainer maxWidth="lg" sx={{ py: { lg: 3 } }}>
+      <MainContainer maxWidth="lg" sx={{ py: { md: 3, lg: 4 } }}>
         {!isLargeSmViewport && (
           <Typography variant="h2" fontSize="40px">
             {title}

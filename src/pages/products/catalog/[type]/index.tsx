@@ -54,13 +54,7 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
 
   return (
     <MainWrapper>
-      <MainContainer>
-        {/* <CardContainer>
-          {products.map((item) => (
-            <ProductItem data={item} />
-          ))}
-        </CardContainer> */}
-
+      <MainContainer sx={{ py: { md: 3, lg: 4 } }}>
         <Grid container spacing="20px">
           {products.map((item, index) => (
             <Grid item xs={6} md={4} key={index}>
