@@ -2,24 +2,25 @@ import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { Form, Heading, Input } from "../register/styled";
 import { FormEvent, useState } from "react";
 import { I_LoginRes, I_UniRes } from "@/types";
-import Button from "@/components/Button/Button";
+import Button from "@/components/Btn/Btn";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/router";
 import { getStoreInstance } from "@/store/user-store";
 import MainContainer from "@/components/MainContainer/MainContainer";
 import { Typography } from "@mui/material";
 import Link from "next/link";
+import LoadingBtn from "@/components/LoadingBtn/LoadingBtn";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const userStore = getStoreInstance();
 
-  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submitHandler = async () => {
+    setIsSubmitting(true);
 
     const sendData = {
       email,
@@ -45,6 +46,8 @@ const LoginPage: React.FC = () => {
         router.push("/");
       }
     }
+
+    setIsSubmitting(false);
   };
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -80,7 +83,14 @@ const LoginPage: React.FC = () => {
           onChange={handleInputChange}
           required
         />
-        <Button>Login</Button>
+        <LoadingBtn
+          loading={isSubmitting}
+          clickHandler={() => {
+            submitHandler();
+          }}
+        >
+          Login
+        </LoadingBtn>
       </Form>
       <Typography
         component="div"

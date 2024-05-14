@@ -16,7 +16,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import Btn from "@/components/Button/Button";
+import Btn from "@/components/Btn/Btn";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {

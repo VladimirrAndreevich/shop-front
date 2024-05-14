@@ -1,6 +1,6 @@
-import Button from "@/components/Button/Button";
+import Button from "@/components/Btn/Btn";
 import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Form, Heading, Input } from "./styled";
 import { I_RegisterRes, I_UniRes } from "@/types";
 import { observer } from "mobx-react-lite";
@@ -9,18 +9,20 @@ import { useRouter } from "next/router";
 import MainContainer from "@/components/MainContainer/MainContainer";
 import Link from "next/link";
 import { Typography } from "@mui/material";
+import Btn from "@/components/Btn/Btn";
+import LoadingBtn from "@/components/LoadingBtn/LoadingBtn";
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const userStore = getStoreInstance();
 
-  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submitHandler = async () => {
+    setIsSubmitting(true);
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
       return;
@@ -54,6 +56,7 @@ const RegisterPage: React.FC = () => {
       userStore.initToken(formattedRes.data.accessToken);
       router.push("/");
     }
+    setIsSubmitting(false);
   };
 
   const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -75,7 +78,7 @@ const RegisterPage: React.FC = () => {
   return (
     <MainContainer sx={{ py: { xs: 3, md: 4, lg: 8 } }} maxWidth="sm">
       <Heading>Registration</Heading>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Input
           type="text"
           name="email"
@@ -100,7 +103,14 @@ const RegisterPage: React.FC = () => {
           onChange={handleInputChange}
           required
         />
-        <Button>Register</Button>
+        <LoadingBtn
+          loading={isSubmitting}
+          clickHandler={() => {
+            submitHandler();
+          }}
+        >
+          Register
+        </LoadingBtn>
       </Form>
       <Typography
         component="div"

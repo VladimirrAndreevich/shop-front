@@ -32,7 +32,7 @@ const DecorationActiveImage: React.FC<DecorationActiveImage> = ({
           const isActive = index == activeImage;
 
           return (
-            <Grid item xs={4}>
+            <Grid item xs={4} key={index}>
               <Box
                 sx={{
                   height: "2px",

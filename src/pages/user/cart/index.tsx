@@ -5,7 +5,7 @@ import {
   EmptyDescription,
   EmptyHeading,
 } from "./styled";
-import Button from "@/components/Button/Button";
+import Button from "@/components/Btn/Btn";
 import Image from "next/image";
 import { ImageDecor } from "@/components/ImageDecor/ImageDecor";
 import { getStoreInstance } from "@/store/user-store";

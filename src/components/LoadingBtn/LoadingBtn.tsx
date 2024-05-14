@@ -5,6 +5,7 @@ import {
   ThemeProvider,
   createTheme,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 // Augment the palette to include an ochre color
 declare module "@mui/material/styles" {
@@ -39,12 +40,19 @@ type ButtonProps = {
   children: string | React.ReactNode;
   clickHandler?: () => void;
   sx?: SxProps<Theme>;
+  loading?: boolean;
 };
 
-const Btn: React.FC<ButtonProps> = ({ children, clickHandler, sx = [] }) => {
+const LoadingBtn: React.FC<ButtonProps> = ({
+  children,
+  clickHandler,
+  sx = [],
+  loading,
+}) => {
   return (
     <ThemeProvider theme={theme}>
-      <Button
+      <LoadingButton
+        loading={loading}
         color="button"
         variant="contained"
         onClick={clickHandler}
@@ -56,9 +64,9 @@ const Btn: React.FC<ButtonProps> = ({ children, clickHandler, sx = [] }) => {
         ]}
       >
         {children}
-      </Button>
+      </LoadingButton>
     </ThemeProvider>
   );
 };
 
-export default Btn;
+export default LoadingBtn;
