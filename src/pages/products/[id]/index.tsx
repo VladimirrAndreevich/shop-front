@@ -60,7 +60,11 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
           </Typography>
         )}
 
-        <Grid container columnSpacing={{ xs: 3, md: 5, lg: 10 }}>
+        <Grid
+          container
+          rowSpacing={{ xs: 3, sm: 0 }}
+          columnSpacing={{ sm: 3, md: 5, lg: 10 }}
+        >
           <Grid item xs={12} sm={6}>
             <GalleryWithChoice images={[mainImage, ...images]} title={title} />
           </Grid>
