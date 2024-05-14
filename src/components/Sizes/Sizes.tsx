@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Heading, SizesItem, SizesList } from "./style";
+import { SizesItem, SizesList } from "./style";
+import { Box, Grid, Typography } from "@mui/material";
+import colors from "@/consts/colors";
 
 const sizes = {
   start: 36,
@@ -25,18 +27,53 @@ const Sizes: React.FC<SizesProps> = ({ changeSize }) => {
 
   return (
     <>
-      <Heading>EU sizes:</Heading>
-      <SizesList>
-        {sizesList.map((item, index) => (
-          <SizesItem
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            $active={index === activeIndex}
-          >
-            {item}
-          </SizesItem>
-        ))}
-      </SizesList>
+      <Typography
+        variant="h3"
+        sx={{
+          fontSize: "20px",
+          textTransform: "uppercase",
+        }}
+      >
+        EU sizes:
+      </Typography>
+
+      <Grid
+        container
+        columns={10}
+        spacing="5px"
+        // sx={{ marginTop: { xs: "13px", md: "20px" } }}
+        marginTop={{ xs: "5px" }}
+      >
+        {sizesList.map((item, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <Grid
+              item
+              xs={2}
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              // $active={index === activeIndex}
+            >
+              <Box
+                sx={{
+                  border: isActive
+                    ? `1px solid ${colors.accent}`
+                    : "1px solid #7B7B7B",
+                  backgroundColor: isActive ? `${colors.accent}` : "none",
+                  borderRadius: "4px",
+                  py: "8px",
+                  textAlign: "center",
+                  color: isActive ? "white" : `${colors.primary}`,
+                  cursor: "pointer",
+                  userSelect: "none",
+                }}
+              >
+                {item}
+              </Box>
+            </Grid>
+          );
+        })}
+      </Grid>
     </>
   );
 };

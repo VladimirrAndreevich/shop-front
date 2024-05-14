@@ -1,21 +1,50 @@
+import colors from "@/consts/colors";
+import { Box, Grid } from "@mui/material";
 import styled from "styled-components";
 
-export const MainImageWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 285px;
-  margin-top: 12px;
-`;
+type DecorationActiveImage = {
+  activeImage: number;
+  images: string[];
+};
 
-export const AdditionalImagesWrapper = styled.div<{ $amount?: number }>`
-  display: grid;
-  grid-gap: 12px;
-  grid-template-columns: repeat(${(props) => props.$amount}, 1fr);
-  grid-template-rows: 100px;
+const DecorationActiveImage: React.FC<DecorationActiveImage> = ({
+  activeImage,
+  images,
+}) => {
+  return (
+    <Box
+      sx={{
+        position: "relative",
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "2px",
+          backgroundColor: colors.third,
+          zIndex: -1,
+        },
+      }}
+    >
+      <Grid container spacing="12px">
+        {images.map((_, index) => {
+          const isActive = index == activeImage;
 
-  margin-top: 12px;
-`;
+          return (
+            <Grid item xs={4}>
+              <Box
+                sx={{
+                  height: "2px",
+                  backgroundColor: isActive ? colors.accent : "none",
+                }}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Box>
+  );
+};
 
-export const AdditionalImageBox = styled.div`
-  position: relative;
-`;
+export default DecorationActiveImage;

@@ -1,9 +1,10 @@
 import colors from "@/consts/colors";
+import { Grid } from "@mui/material";
 import styled from "styled-components";
 
-export const Heading = styled.h2`
-  margin-top: 30px;
-`;
+// export const Heading = styled.h2`
+//   margin-top: 30px;
+// `;
 
 export const SizesList = styled.ul`
   display: grid;

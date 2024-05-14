@@ -1,10 +1,6 @@
 import { useState } from "react";
-import {
-  AdditionalImageBox,
-  AdditionalImagesWrapper,
-  MainImageWrapper,
-} from "./styled";
-import Image from "next/image";
+import { CardMedia, Grid } from "@mui/material";
+import DecorationActiveImage from "./styled";
 
 type GalleryWithChoiceProps = {
   images: string[];
@@ -21,43 +17,34 @@ const GalleryWithChoice: React.FC<GalleryWithChoiceProps> = ({
     return `${process.env.API_URL_IMAGES}/${image}`;
   };
 
-  const additionalImages = (
-    <>
-      {images.map((image, index) => {
-        const pathImg = getPath(image);
-
-        return (
-          <AdditionalImageBox onClick={() => setActiveImage(index)}>
-            <Image
-              key={index}
-              src={`${process.env.API_URL_IMAGES}/${image}`}
-              alt={`The image of ${title}`}
-              fill
-              style={{
-                objectFit: "cover",
-              }}
-              priority
-            />
-          </AdditionalImageBox>
-        );
-      })}
-    </>
-  );
-
   return (
     <>
-      <MainImageWrapper>
-        <Image
-          src={getPath(images[activeImage])}
-          alt={`The image of ${title}`}
-          fill
-          priority
-        />
-      </MainImageWrapper>
+      <CardMedia
+        sx={{
+          height: { xs: "340px" },
+          backgroundSize: "contain",
+        }}
+        image={getPath(images[activeImage])}
+        title={`The image of ${title}`}
+      />
 
-      <AdditionalImagesWrapper $amount={images.length}>
-        {additionalImages}
-      </AdditionalImagesWrapper>
+      <Grid container spacing="12px">
+        {images.map((image, index) => (
+          <Grid item xs={4} key={index} onClick={() => setActiveImage(index)}>
+            <CardMedia
+              sx={{
+                height: "140px",
+                backgroundSize: "contain",
+                marginBottom: "5px",
+                cursor: "pointer",
+              }}
+              image={`${process.env.API_URL_IMAGES}/${image}`}
+              title={`The image of ${title}`}
+            />
+          </Grid>
+        ))}
+      </Grid>
+      <DecorationActiveImage activeImage={activeImage} images={images} />
     </>
   );
 };
