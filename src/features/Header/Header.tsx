@@ -61,7 +61,7 @@ const Header: React.FC = observer(() => {
                 )}
                 {userStore.isLogged && (
                   <>
-                    <Link href="/user/favorites">
+                    {/* <Link href="/user/favorites">
                       <Image
                         src="/icons/star.svg"
                         alt="The icon of a star"
@@ -69,7 +69,7 @@ const Header: React.FC = observer(() => {
                         height={25}
                         priority
                       />
-                    </Link>
+                    </Link> */}
                     <Link href="/user/cart">
                       {/* <Badge
                         badgeContent={

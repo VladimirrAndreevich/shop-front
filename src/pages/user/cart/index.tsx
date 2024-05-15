@@ -185,13 +185,14 @@ const CartPage: React.FC = () => {
                 </TableCell>
                 {/* <TableCell />
                 <TableCell /> */}
-                <TableCell />
+                {/* <TableCell /> */}
                 <TableCell
                   align="right"
                   sx={{
                     fontWeight: "bold",
                     fontSize: "16px",
                   }}
+                  colSpan={2}
                 >
                   {totalPrice?.toFixed(2)} €
                 </TableCell>
