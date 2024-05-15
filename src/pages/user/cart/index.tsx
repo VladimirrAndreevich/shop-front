@@ -22,7 +22,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  createTheme,
 } from "@mui/material";
 import CartControlButtons from "@/features/CartControlButtons/CartControlButtons";
 
@@ -89,15 +88,15 @@ const CartPage: React.FC = () => {
   //   createData("Gingerbread", 3.9),
   // ];
 
-  const rows = userStore.cart?.map((item) => {
-    return {
-      title: item.title,
-      quantity: item.quantity,
-      size: item.size,
-      total: item.price,
-      productId: item.product.id,
-    };
-  });
+  // const rows = userStore.cart?.map((item) => {
+  //   return {
+  //     title: item.title,
+  //     quantity: item.quantity,
+  //     size: item.size,
+  //     total: item.price,
+  //     productId: item.product.id,
+  //   };
+  // });
 
   const totalPrice = userStore.cart?.reduce((accumulator, currentValue) => {
     return +accumulator + +currentValue.price;
@@ -144,7 +143,7 @@ const CartPage: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows?.map((row, index) => (
+              {userStore.cart?.map((row, index) => (
                 <TableRow
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -162,7 +161,7 @@ const CartPage: React.FC = () => {
                         </Typography>
                       </Stack>
                       <CartControlButtons
-                        productId={row.productId}
+                        productId={row.product.id}
                         size={row.size}
                       />
                     </Stack>
@@ -170,7 +169,7 @@ const CartPage: React.FC = () => {
                   <TableCell>{row.size}</TableCell>
                   {/* <TableCell />
                   <TableCell /> */}
-                  <TableCell align="right">{row.total}</TableCell>
+                  <TableCell align="right">{row.price}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

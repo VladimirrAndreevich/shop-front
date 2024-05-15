@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import Btn from "@/components/Btn/Btn";
 import LoadingBtn from "@/components/LoadingBtn/LoadingBtn";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {
@@ -42,6 +43,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
   const userStore = getStoreInstance();
   const theme = useTheme();
   const isLargeSmViewport = useMediaQuery(theme.breakpoints.up("sm"));
+  const router = useRouter();
 
   const [activeSize, setActiveSize] = useState(36);
 
@@ -140,9 +142,13 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
                 </LoadingBtn>
                 <LoadingBtn
                   loading={userStore.isAddingToCart}
-                  clickHandler={() =>
-                    userStore.addItemCart(id, activeSize.toString())
-                  }
+                  clickHandler={() => {
+                    if (userStore.isLogged) {
+                      userStore.addItemCart(id, activeSize.toString());
+                    } else {
+                      router.push("/user/login");
+                    }
+                  }}
                   sx={{
                     py: { sm: "15px" },
                     px: { md: "25px" },
