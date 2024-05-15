@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 class UserStore {
   isLogged = false;
+  isTryingLogin = true;
   cart?: I_CartItem[];
   token?: string;
   isAddingToCart? = false;
@@ -13,13 +14,14 @@ class UserStore {
     makeAutoObservable(this);
   }
 
-  initToken = (_token: string | null) => {
+  initToken = async (_token: string | null) => {
     if (_token !== null) {
       this.token = _token;
-      this.checkAuth();
+      await this.checkAuth();
     } else {
       console.warn("No token provided");
     }
+    this.isTryingLogin = false;
   };
 
   checkAuth = async () => {

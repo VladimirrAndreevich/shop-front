@@ -1,6 +1,5 @@
 import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { EmptyButton, EmptyDescription, EmptyHeading } from "./styled";
-import Button from "@/components/Btn/Btn";
 import Image from "next/image";
 import { ImageDecor } from "@/components/ImageDecor/ImageDecor";
 import { getStoreInstance } from "@/store/user-store";
@@ -12,7 +11,9 @@ import MainContainer from "@/components/MainContainer/MainContainer";
 import SectionHeading from "@/SectionHeading/SectionHeading";
 import {
   Box,
+  CircularProgress,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -21,19 +22,29 @@ import {
   TableHead,
   TableRow,
   Typography,
+  createTheme,
 } from "@mui/material";
+import CartControlButtons from "@/features/CartControlButtons/CartControlButtons";
 
 const CartPage: React.FC = () => {
   const router = useRouter();
   const userStore = getStoreInstance();
 
   useEffect(() => {
-    if (!userStore.isLogged) {
+    if (!userStore.isLogged && !userStore.isTryingLogin) {
       router.push("/user/login");
     }
   }, []);
 
-  if (!userStore.cart || userStore.cart.length < 1) {
+  if (userStore.isTryingLogin) {
+    return <CircularProgress sx={{ color: "black" }} />;
+  }
+
+  if (
+    (!userStore.cart || userStore.cart.length < 1) &&
+    !userStore.isTryingLogin &&
+    userStore.isLogged
+  ) {
     return (
       <MainWrapper>
         <MainContainer
@@ -78,16 +89,17 @@ const CartPage: React.FC = () => {
   //   createData("Gingerbread", 3.9),
   // ];
 
-  const rows = userStore.cart.map((item) => {
+  const rows = userStore.cart?.map((item) => {
     return {
       title: item.title,
       quantity: item.quantity,
       size: item.size,
       total: item.price,
+      productId: item.product.id,
     };
   });
 
-  const totalPrice = userStore.cart.reduce((accumulator, currentValue) => {
+  const totalPrice = userStore.cart?.reduce((accumulator, currentValue) => {
     return +accumulator + +currentValue.price;
   }, 0);
 
@@ -119,8 +131,8 @@ const CartPage: React.FC = () => {
                 >
                   Size
                 </TableCell>
-                <TableCell />
-                <TableCell />
+                {/* <TableCell />
+                <TableCell /> */}
                 <TableCell
                   align="right"
                   sx={{
@@ -132,20 +144,32 @@ const CartPage: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
+              {rows?.map((row, index) => (
                 <TableRow
                   key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                    {row.title}{" "}
-                    <Typography component="span" color="#888888">
-                      x{row.quantity}
-                    </Typography>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    // sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <Stack direction="row" alignItems="center" spacing={3}>
+                      <Stack direction="row" alignItems="center" spacing="2px">
+                        <p>{row.title}</p>
+                        <Typography component="span" color="#888888">
+                          x{row.quantity}
+                        </Typography>
+                      </Stack>
+                      <CartControlButtons
+                        productId={row.productId}
+                        size={row.size}
+                      />
+                    </Stack>
                   </TableCell>
                   <TableCell>{row.size}</TableCell>
-                  <TableCell />
-                  <TableCell />
+                  {/* <TableCell />
+                  <TableCell /> */}
                   <TableCell align="right">{row.total}</TableCell>
                 </TableRow>
               ))}
@@ -160,8 +184,8 @@ const CartPage: React.FC = () => {
                 >
                   Total
                 </TableCell>
-                <TableCell />
-                <TableCell />
+                {/* <TableCell />
+                <TableCell /> */}
                 <TableCell />
                 <TableCell
                   align="right"
@@ -170,7 +194,7 @@ const CartPage: React.FC = () => {
                     fontSize: "16px",
                   }}
                 >
-                  {totalPrice.toFixed(2)} €
+                  {totalPrice?.toFixed(2)} €
                 </TableCell>
               </TableRow>
             </TableFooter>
