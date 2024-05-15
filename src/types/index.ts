@@ -34,6 +34,7 @@ export interface I_UniRes {
 
 export interface I_CartRes extends I_UniRes {
   cart: I_CartItem[];
+  total: number;
 }
 
 export interface I_ProductsRes extends I_UniRes {

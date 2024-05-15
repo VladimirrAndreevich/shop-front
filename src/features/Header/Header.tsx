@@ -4,71 +4,18 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import Link from "next/link";
 import MainContainer from "@/components/MainContainer/MainContainer";
-import { Box, Grid, Stack } from "@mui/material";
+import { Badge, Box, Grid, Stack } from "@mui/material";
 import colors from "@/consts/colors";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useRouter } from "next/router";
 
 const Header: React.FC = observer(() => {
   const userStore = getStoreInstance();
+  const router = useRouter();
 
   useEffect(() => {
     userStore.initToken(localStorage.getItem("token"));
   }, []);
-
-  // return (
-  //   <HeaderStyled>
-  //     <MainContainer>
-  //       <Content>
-  //         <div></div>
-
-  //         <LinkLogo href="/">
-  //           <Image
-  //             src="/logo.svg"
-  //             alt="Shop Logo"
-  //             width={70}
-  //             height={27}
-  //             priority
-  //           />
-  //         </LinkLogo>
-
-  //         <RightContainer>
-  //           {!userStore.isLogged && (
-  //             <Link href="/user/register">
-  //               <Image
-  //                 src="/icons/user.svg"
-  //                 alt="The icon of a star"
-  //                 width={20}
-  //                 height={25}
-  //                 priority
-  //               />
-  //             </Link>
-  //           )}
-  //           {userStore.isLogged && (
-  //             <>
-  //               <Link href="/user/favorites">
-  //                 <Image
-  //                   src="/icons/star.svg"
-  //                   alt="The icon of a star"
-  //                   width={20}
-  //                   height={25}
-  //                   priority
-  //                 />
-  //               </Link>
-  //               <Link href="/user/cart">
-  //                 <Image
-  //                   src="/icons/cart.svg"
-  //                   alt="The icon of a cart"
-  //                   width={20}
-  //                   height={25}
-  //                   priority
-  //                 />
-  //               </Link>
-  //             </>
-  //           )}
-  //         </RightContainer>
-  //       </Content>
-  //     </MainContainer>
-  //   </HeaderStyled>
-  // );
 
   return (
     <header style={{ backgroundColor: colors.primary }}>
@@ -95,7 +42,12 @@ const Header: React.FC = observer(() => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Stack direction="row" spacing="20px" justifyContent="flex-end">
+              <Stack
+                direction="row"
+                spacing="20px"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
                 {!userStore.isLogged && (
                   <Link href="/user/register">
                     <Image
@@ -119,6 +71,20 @@ const Header: React.FC = observer(() => {
                       />
                     </Link>
                     <Link href="/user/cart">
+                      {/* <Badge
+                        badgeContent={
+                          <div>{`${userStore.totalCartItems}`}</div>
+                        }
+                        color="primary"
+                      >
+                        <Image
+                          src="/icons/cart.svg"
+                          alt="The icon of a cart"
+                          width={20}
+                          height={25}
+                          priority
+                        />
+                      </Badge> */}
                       <Image
                         src="/icons/cart.svg"
                         alt="The icon of a cart"
@@ -127,6 +93,18 @@ const Header: React.FC = observer(() => {
                         priority
                       />
                     </Link>
+                    <div
+                      onClick={() => {
+                        userStore.logout();
+                        router.push("/");
+                      }}
+                    >
+                      <LogoutIcon
+                        sx={{ color: "white" }}
+                        // width={20}
+                        // height={25}
+                      />
+                    </div>
                   </>
                 )}
               </Stack>

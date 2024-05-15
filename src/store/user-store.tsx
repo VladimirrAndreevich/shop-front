@@ -1,5 +1,5 @@
 import { I_CartItem, I_CartRes } from "@/types";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 
 class UserStore {
   isLogged = false;
@@ -7,6 +7,7 @@ class UserStore {
   token?: string;
   isAddingToCart? = false;
   isRemovingFromCart? = false;
+  totalCartItems?: number;
 
   constructor() {
     makeAutoObservable(this);
@@ -124,7 +125,17 @@ class UserStore {
 
     const formattedResponse: I_CartRes = await response.json();
     // console.log(formattedResponse.cart);
-    this.cart = formattedResponse.cart;
+
+    runInAction(() => {
+      this.cart = formattedResponse.cart;
+      this.totalCartItems = formattedResponse.total;
+    });
+  }
+
+  logout() {
+    localStorage.removeItem("token");
+    this.isLogged = false;
+    this.token = undefined;
   }
 }
 
