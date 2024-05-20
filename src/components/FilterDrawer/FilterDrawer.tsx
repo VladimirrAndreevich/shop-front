@@ -1,7 +1,14 @@
-import { Box, Button, Drawer } from "@mui/material";
+import {
+  Box,
+  Button,
+  Drawer,
+  Stack,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import Btn from "../Btn/Btn";
-import FilterByPrice from "@/Filter/FilterByPrice";
+import FilterByPrice from "@/FilterByPrice/FilterByPrice";
 import FilterByColor from "../FilterByColor/FilterByColor";
 import { E_Type, I_ProductCard, I_ProductsByTypeRes } from "@/types";
 import axios from "axios";
@@ -12,6 +19,31 @@ type FilterDrawerProps = {
   typeShoes: E_Type;
   setProducts: Dispatch<SetStateAction<I_ProductCard[]>>;
 };
+
+declare module "@mui/material/styles" {
+  interface Palette {
+    button: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    button?: PaletteOptions["primary"];
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    button: true;
+  }
+}
+
+const theme = createTheme({
+  palette: {
+    button: {
+      main: "#49D0FF",
+      contrastText: "white",
+    },
+  },
+});
 
 const FilterDrawer: React.FC<FilterDrawerProps> = ({
   typeShoes,
@@ -47,41 +79,49 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
   };
 
   return (
-    <div>
-      <Btn clickHandler={toggleDrawer(true)} variant="outlined">
-        Open filters
-      </Btn>
-      <Drawer
-        anchor="bottom"
-        open={open}
-        onClose={toggleDrawer(false)}
-        sx={{
-          "& .MuiDrawer-paper": {
-            mx: "10px",
-            borderRadius: "5px 5px 0 0",
-          },
-        }}
-      >
-        <Box sx={{ p: 3 }}>
-          <FilterByPrice value={value} setValue={setValue} />
-          <FilterByColor
-            colors={colors}
-            setIndexColor={setIndexColor}
-            activeIndexColor={indexColor}
-          />
-          <Button
-            variant="contained"
-            color="warning"
-            sx={{ mt: 2 }}
-            onClick={() => {
-              getProductByFilter();
-            }}
-          >
-            Apply filters
-          </Button>
-        </Box>
-      </Drawer>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Btn
+          clickHandler={toggleDrawer(true)}
+          variant="outlined"
+          sx={{ display: "block", mx: "auto" }}
+        >
+          Open filters
+        </Btn>
+        <Drawer
+          anchor="bottom"
+          open={open}
+          onClose={toggleDrawer(false)}
+          sx={{
+            "& .MuiDrawer-paper": {
+              mx: "10px",
+              borderRadius: "5px 5px 0 0",
+            },
+          }}
+        >
+          <Box sx={{ p: 3 }}>
+            <FilterByPrice value={value} setValue={setValue} />
+            <FilterByColor
+              colors={colors}
+              setIndexColor={setIndexColor}
+              activeIndexColor={indexColor}
+            />
+            <Stack mt={2}>
+              <Button
+                variant="contained"
+                color="button"
+                sx={{ mt: 2 }}
+                onClick={() => {
+                  getProductByFilter();
+                }}
+              >
+                Apply filters
+              </Button>
+            </Stack>
+          </Box>
+        </Drawer>
+      </div>
+    </ThemeProvider>
   );
 };
 

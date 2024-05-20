@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 type FilterByColorProps = {
   colors: string[];
   setIndexColor: Dispatch<SetStateAction<number | undefined>>;
-  activeIndexColor: number;
+  activeIndexColor: number | undefined;
 };
 
 const FilterByColor: React.FC<FilterByColorProps> = ({

@@ -60,7 +60,7 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
       <MainContainer sx={{ py: { md: 3, lg: 4 } }}>
         <FilterDrawer typeShoes={typeShoes} setProducts={setProducts} />
 
-        <Grid container spacing="20px">
+        <Grid container spacing="20px" mt={1}>
           {products.map((item, index) => (
             <Grid item xs={6} md={4} key={index}>
               <ProductItem data={item} />
