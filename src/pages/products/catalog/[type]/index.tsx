@@ -4,6 +4,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import ProductItem from "@/components/ProductItem/ProductItem";
 import MainContainer from "@/components/MainContainer/MainContainer";
 import { Grid } from "@mui/material";
+import FilterDrawer from "@/components/FilterDrawer/FilterDrawer";
+import { useState } from "react";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -50,11 +52,14 @@ interface CatalogPageProps {
 }
 
 const CatalogPage: React.FC<CatalogPageProps> = (props) => {
-  const { products, amount } = props;
+  const [products, setProducts] = useState(props.products);
+  const { amount, typeShoes } = props;
 
   return (
     <MainWrapper>
       <MainContainer sx={{ py: { md: 3, lg: 4 } }}>
+        <FilterDrawer typeShoes={typeShoes} setProducts={setProducts} />
+
         <Grid container spacing="20px">
           {products.map((item, index) => (
             <Grid item xs={6} md={4} key={index}>

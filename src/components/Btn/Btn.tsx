@@ -40,6 +40,7 @@ type ButtonProps = {
   clickHandler?: () => void;
   sx?: SxProps<Theme>;
   disabled?: boolean;
+  variant?: "contained" | "outlined";
 };
 
 const Btn: React.FC<ButtonProps> = ({
@@ -47,13 +48,14 @@ const Btn: React.FC<ButtonProps> = ({
   clickHandler,
   sx = [],
   disabled,
+  variant,
 }) => {
   return (
     <ThemeProvider theme={theme}>
       <Button
         disabled={disabled}
         color="button"
-        variant="contained"
+        variant={`${variant ? variant : "contained"}`}
         onClick={clickHandler}
         sx={[
           {
