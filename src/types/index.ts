@@ -23,6 +23,7 @@ export interface I_CartItem {
   size: string;
   product: {
     id: number;
+    mainImage: string;
   };
 }
 

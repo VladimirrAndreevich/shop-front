@@ -50,7 +50,9 @@ const LoadBtn: React.FC<{
       size="small"
       sx={{
         minWidth: "20px",
-        width: { xs: "30px", sm: "40px" },
+        width: { xs: "30px", sm: "35px" },
+        height: { xs: "30px", sm: "35px" },
+        borderRadius: "50%",
       }}
       onClick={onClickHandler}
     >
@@ -62,11 +64,13 @@ const LoadBtn: React.FC<{
 type CartControlButtonsProps = {
   size: string;
   productId: number;
+  children: React.ReactNode | string;
 };
 
 const CartControlButtons: React.FC<CartControlButtonsProps> = ({
   size,
   productId,
+  children,
 }) => {
   const userStore = getStoreInstance();
 
@@ -78,7 +82,7 @@ const CartControlButtons: React.FC<CartControlButtonsProps> = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <Stack spacing={1}>
+      <Stack direction="row" spacing={1} alignItems="center">
         <LoadBtn
           isSubmitting={userStore.isAddingToCart}
           onClickHandler={() => {
@@ -87,7 +91,7 @@ const CartControlButtons: React.FC<CartControlButtonsProps> = ({
         >
           <AddIcon sx={{ fontSize: "15px" }} />
         </LoadBtn>
-
+        <span>{children}</span>
         <LoadBtn
           disabled={!isRemoveButton}
           isSubmitting={userStore.isRemovingFromCart}

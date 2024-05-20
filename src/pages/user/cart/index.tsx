@@ -9,20 +9,7 @@ import { useEffect } from "react";
 import Btn from "@/components/Btn/Btn";
 import MainContainer from "@/components/MainContainer/MainContainer";
 import SectionHeading from "@/SectionHeading/SectionHeading";
-import {
-  Box,
-  CircularProgress,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableFooter,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Divider, Grid } from "@mui/material";
 import CartControlButtons from "@/features/CartControlButtons/CartControlButtons";
 
 const CartPage: React.FC = () => {
@@ -76,28 +63,6 @@ const CartPage: React.FC = () => {
     );
   }
 
-  // function createData(title: string, total: number) {
-  //   return { title, total };
-  // }
-
-  // const rows = [
-  //   createData("Frozen yoghurt", 4.0),
-  //   createData("Ice cream sandwich", 4.3),
-  //   createData("Eclair", 6.0),
-  //   createData("Cupcake", 4.3),
-  //   createData("Gingerbread", 3.9),
-  // ];
-
-  // const rows = userStore.cart?.map((item) => {
-  //   return {
-  //     title: item.title,
-  //     quantity: item.quantity,
-  //     size: item.size,
-  //     total: item.price,
-  //     productId: item.product.id,
-  //   };
-  // });
-
   const totalPrice = userStore.cart?.reduce((accumulator, currentValue) => {
     return +accumulator + +currentValue.price;
   }, 0);
@@ -108,98 +73,53 @@ const CartPage: React.FC = () => {
         sx={{ py: { xs: 3, md: 4, lg: 8 }, textAlign: "center" }}
         maxWidth="xl"
       >
-        {/* {userStore.cart.map((item) => (
-        <div>{item.title}</div>
-      ))} */}
         <SectionHeading>Cart of goods</SectionHeading>
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                  }}
+        <Grid container sx={{ fontWeight: "bold" }}>
+          <Grid xs={3} item>
+            Item
+          </Grid>
+          <Grid xs={3} item>
+            Size
+          </Grid>
+          <Grid xs={3} item>
+            Qut
+          </Grid>
+          <Grid xs={3} item>
+            Price
+          </Grid>
+        </Grid>
+        {userStore.cart?.map((item, index) => (
+          <>
+            <Divider sx={{ backgroundColor: "#cacdd8", my: 2 }} />
+            <Grid container key={index} alignItems="center">
+              <Grid xs={3} item>
+                <Image
+                  src={`${process.env.API_URL_IMAGES}/${item.product.mainImage}`}
+                  alt={`Image of ${item.title}`}
+                  width={100}
+                  height={100}
+                />
+              </Grid>
+              <Grid xs={3} item>
+                {item.title}
+              </Grid>
+              <Grid xs={2} item>
+                {item.size}
+              </Grid>
+              <Grid xs={2} item>
+                <CartControlButtons
+                  size={item.size}
+                  productId={item.product.id}
                 >
-                  Title
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Size
-                </TableCell>
-                {/* <TableCell />
-                <TableCell /> */}
-                <TableCell
-                  align="right"
-                  sx={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Price
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {userStore.cart?.map((row, index) => (
-                <TableRow
-                  key={index}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    // sx={{ display: "flex", alignItems: "center" }}
-                  >
-                    <Stack direction="row" alignItems="center" spacing={3}>
-                      <Stack direction="row" alignItems="center" spacing="2px">
-                        <p>{row.title}</p>
-                        <Typography component="span" color="#888888">
-                          x{row.quantity}
-                        </Typography>
-                      </Stack>
-                      <CartControlButtons
-                        productId={row.product.id}
-                        size={row.size}
-                      />
-                    </Stack>
-                  </TableCell>
-                  <TableCell>{row.size}</TableCell>
-                  {/* <TableCell />
-                  <TableCell /> */}
-                  <TableCell align="right">{row.price}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                >
-                  Total
-                </TableCell>
-                {/* <TableCell />
-                <TableCell /> */}
-                {/* <TableCell /> */}
-                <TableCell
-                  align="right"
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "16px",
-                  }}
-                  colSpan={2}
-                >
-                  {totalPrice?.toFixed(2)} €
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
+                  {item.quantity}
+                </CartControlButtons>
+              </Grid>
+              <Grid xs={2} item>
+                {item.price} €
+              </Grid>
+            </Grid>
+          </>
+        ))}
       </MainContainer>
     </MainWrapper>
   );
