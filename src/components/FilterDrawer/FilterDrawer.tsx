@@ -18,21 +18,26 @@ const colors = ["green", "black", "gray", "blue", "yellow", "orange"];
 type FilterDrawerProps = {
   typeShoes: E_Type;
   setProducts: Dispatch<SetStateAction<I_ProductCard[]>>;
+  setAmount: Dispatch<SetStateAction<number>>;
+  isLargeViewport?: boolean;
 };
 
 declare module "@mui/material/styles" {
   interface Palette {
     button: Palette["primary"];
+    button_reset: Palette["primary"];
   }
 
   interface PaletteOptions {
     button?: PaletteOptions["primary"];
+    button_reset?: PaletteOptions["primary"];
   }
 }
 
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     button: true;
+    button_reset: true;
   }
 }
 
@@ -42,15 +47,21 @@ const theme = createTheme({
       main: "#49D0FF",
       contrastText: "white",
     },
+    button_reset: {
+      main: "#ffffff",
+      contrastText: "black",
+    },
   },
 });
 
 const FilterDrawer: React.FC<FilterDrawerProps> = ({
   typeShoes,
   setProducts,
+  setAmount,
+  isLargeViewport,
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<number[]>([100, 3000]);
+  const [value, setValue] = useState<number[]>([100, 5000]);
   const [indexColor, setIndexColor] = useState<number | undefined>();
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -75,8 +86,59 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
       .then((response) => response.data);
 
     setProducts(response.data.products);
+    setAmount(response.data.amount);
     setOpen(false);
   };
+
+  const reset = async () => {
+    setValue([100, 5000]);
+    setIndexColor(undefined);
+    getProductByFilter();
+
+    const response: I_ProductsByTypeRes = await axios
+      .get(`${process.env.API_URL_BACKEND}/products/by-type?type=${typeShoes}`)
+      .then((response) => response.data);
+
+    setProducts(response.data.products);
+    setAmount(response.data.amount);
+  };
+
+  const filterContent = (
+    <Box sx={{ p: { xs: 3, lg: 0 } }}>
+      <FilterByPrice value={value} setValue={setValue} />
+      <FilterByColor
+        colors={colors}
+        setIndexColor={setIndexColor}
+        activeIndexColor={indexColor}
+      />
+      <Stack mt={2}>
+        <Button
+          variant="contained"
+          color="button"
+          sx={{ mt: 2 }}
+          onClick={() => {
+            getProductByFilter();
+          }}
+        >
+          Apply filters
+        </Button>
+        <Button
+          variant="contained"
+          color="button_reset"
+          sx={{ mt: 2 }}
+          onClick={() => {
+            reset();
+          }}
+        >
+          Reset filters
+        </Button>
+      </Stack>
+    </Box>
+  );
+
+  if (isLargeViewport) {
+    return <ThemeProvider theme={theme}>{filterContent}</ThemeProvider>;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,7 +146,7 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
         <Btn
           clickHandler={toggleDrawer(true)}
           variant="outlined"
-          sx={{ display: "block", mx: "auto" }}
+          sx={{ display: "block", mx: { xs: "auto", md: "initial" }, mt: 1 }}
         >
           Open filters
         </Btn>
@@ -94,31 +156,13 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
           onClose={toggleDrawer(false)}
           sx={{
             "& .MuiDrawer-paper": {
-              mx: "10px",
+              maxWidth: { sm: "580px" },
+              mx: { xs: "10px", sm: "auto" },
               borderRadius: "5px 5px 0 0",
             },
           }}
         >
-          <Box sx={{ p: 3 }}>
-            <FilterByPrice value={value} setValue={setValue} />
-            <FilterByColor
-              colors={colors}
-              setIndexColor={setIndexColor}
-              activeIndexColor={indexColor}
-            />
-            <Stack mt={2}>
-              <Button
-                variant="contained"
-                color="button"
-                sx={{ mt: 2 }}
-                onClick={() => {
-                  getProductByFilter();
-                }}
-              >
-                Apply filters
-              </Button>
-            </Stack>
-          </Box>
+          {filterContent}
         </Drawer>
       </div>
     </ThemeProvider>
