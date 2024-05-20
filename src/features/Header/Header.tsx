@@ -71,10 +71,8 @@ const Header: React.FC = observer(() => {
                       />
                     </Link> */}
                     <Link href="/user/cart">
-                      {/* <Badge
-                        badgeContent={
-                          <div>{`${userStore.totalCartItems}`}</div>
-                        }
+                      <Badge
+                        badgeContent={userStore.totalCartItems}
                         color="primary"
                       >
                         <Image
@@ -84,14 +82,14 @@ const Header: React.FC = observer(() => {
                           height={25}
                           priority
                         />
-                      </Badge> */}
-                      <Image
+                      </Badge>
+                      {/* <Image
                         src="/icons/cart.svg"
                         alt="The icon of a cart"
                         width={20}
                         height={25}
                         priority
-                      />
+                      /> */}
                     </Link>
                     <div
                       onClick={() => {

@@ -1,17 +1,35 @@
 import { I_CartItem, I_CartRes } from "@/types";
-import { makeAutoObservable, runInAction } from "mobx";
+import {
+  action,
+  makeAutoObservable,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
 
 class UserStore {
   isLogged = false;
   isTryingLogin = true;
-  cart?: I_CartItem[];
-  token?: string;
+  cart: I_CartItem[] | null = null;
+  token: string = "";
   isAddingToCart? = false;
   isRemovingFromCart? = false;
-  totalCartItems?: number;
+  totalCartItems?: number = 0;
 
   constructor() {
-    makeAutoObservable(this);
+    // makeAutoObservable(this);
+    makeObservable(this, {
+      isLogged: observable,
+      isTryingLogin: observable,
+      cart: observable,
+      token: observable,
+      isAddingToCart: observable,
+      isRemovingFromCart: observable,
+      totalCartItems: observable,
+      initToken: action,
+      addItemCart: action,
+      removeItemCart: action,
+    });
   }
 
   initToken = async (_token: string | null) => {
@@ -137,7 +155,7 @@ class UserStore {
   logout() {
     localStorage.removeItem("token");
     this.isLogged = false;
-    this.token = undefined;
+    this.token = "";
   }
 }
 
