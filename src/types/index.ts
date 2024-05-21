@@ -19,6 +19,7 @@ export interface I_CartItem {
   id: number;
   title: string;
   price: number;
+  discount: number | null;
   quantity: number;
   size: string;
   product: {

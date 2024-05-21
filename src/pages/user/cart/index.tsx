@@ -74,6 +74,19 @@ const CartPage: React.FC = () => {
   const totalPrice = userStore.cart?.reduce((accumulator, currentValue) => {
     return +accumulator + +currentValue.price;
   }, 0);
+  const totalDiscount = userStore.cart?.reduce((accumulator, currentValue) => {
+    if (currentValue.discount) {
+      console.log(currentValue.discount);
+      return +accumulator + +currentValue.discount;
+    } else {
+      return +accumulator;
+    }
+  }, 0);
+  let subtotal = totalPrice;
+  if (totalDiscount && subtotal) {
+    subtotal += totalDiscount;
+  }
+  // console.log(userStore.cart[0].discount);
 
   return (
     <MainWrapper>
@@ -83,8 +96,8 @@ const CartPage: React.FC = () => {
       >
         <SectionHeading>Cart of goods</SectionHeading>
 
-        <Grid container columnSpacing={4}>
-          <Grid item xs={8}>
+        <Grid container columnSpacing={4} rowSpacing={5}>
+          <Grid item xs={12} md={8}>
             <Grid container sx={{ fontWeight: "bold" }}>
               <Grid xs={6} item>
                 Item
@@ -132,17 +145,44 @@ const CartPage: React.FC = () => {
               </>
             ))}
           </Grid>
-          <Grid item xs={4}>
+
+          <Grid item xs={12} md={4} mx={{ xs: 0, sm: 6, md: 0 }}>
             <Typography variant="h4" fontSize={22} textAlign="left">
               Summary
             </Typography>
             <Divider sx={{ backgroundColor: "#cacdd8", my: 2 }} />
-            <Stack direction="row" justifyContent="space-between">
-              <span>Order Total</span>
-              <span>{totalPrice} €</span>
+
+            <Stack direction="column" spacing={3}>
+              <Stack
+                component={Typography}
+                direction="row"
+                justifyContent="space-between"
+              >
+                <span>Subtotal </span>
+                <span>{subtotal} €</span>
+              </Stack>
+              <Stack
+                component={Typography}
+                direction="row"
+                justifyContent="space-between"
+              >
+                <span>Discount </span>
+                <span>{totalDiscount} €</span>
+              </Stack>
+              <Stack
+                component={Typography}
+                direction="row"
+                justifyContent="space-between"
+                fontWeight="bold"
+              >
+                <span>Order Total</span>
+                <span>{totalPrice} €</span>
+              </Stack>
             </Stack>
 
-            <LoadingBtn sx={{ width: "100%" }}>Proceed to Checkout</LoadingBtn>
+            <LoadingBtn sx={{ width: "100%", mt: 2 }}>
+              Proceed to Checkout
+            </LoadingBtn>
           </Grid>
         </Grid>
       </MainContainer>
