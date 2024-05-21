@@ -106,7 +106,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
                       fontSize: { xs: "16px", sm: "20px", md: "24px" },
                     }}
                   >
-                    {price} €
+                    {priceDiscounted ? priceDiscounted : price} €
                   </Typography>
                   {priceDiscounted && (
                     <Typography
@@ -117,7 +117,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
                         textDecoration: "line-through",
                       }}
                     >
-                      {priceDiscounted} €
+                      {price} €
                     </Typography>
                   )}
                 </Stack>

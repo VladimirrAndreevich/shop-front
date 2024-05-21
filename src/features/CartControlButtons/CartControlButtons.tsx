@@ -82,7 +82,12 @@ const CartControlButtons: React.FC<CartControlButtonsProps> = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        justifyContent="center"
+      >
         <LoadBtn
           isSubmitting={userStore.isAddingToCart}
           onClickHandler={() => {

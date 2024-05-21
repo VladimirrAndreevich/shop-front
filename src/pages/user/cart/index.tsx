@@ -9,8 +9,16 @@ import { useEffect } from "react";
 import Btn from "@/components/Btn/Btn";
 import MainContainer from "@/components/MainContainer/MainContainer";
 import SectionHeading from "@/SectionHeading/SectionHeading";
-import { Box, CircularProgress, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import CartControlButtons from "@/features/CartControlButtons/CartControlButtons";
+import LoadingBtn from "@/components/LoadingBtn/LoadingBtn";
 
 const CartPage: React.FC = () => {
   const router = useRouter();
@@ -74,52 +82,69 @@ const CartPage: React.FC = () => {
         maxWidth="xl"
       >
         <SectionHeading>Cart of goods</SectionHeading>
-        <Grid container sx={{ fontWeight: "bold" }}>
-          <Grid xs={3} item>
-            Item
-          </Grid>
-          <Grid xs={3} item>
-            Size
-          </Grid>
-          <Grid xs={3} item>
-            Qut
-          </Grid>
-          <Grid xs={3} item>
-            Price
-          </Grid>
-        </Grid>
-        {userStore.cart?.map((item, index) => (
-          <>
-            <Divider sx={{ backgroundColor: "#cacdd8", my: 2 }} />
-            <Grid container key={index} alignItems="center">
-              <Grid xs={3} item>
-                <Image
-                  src={`${process.env.API_URL_IMAGES}/${item.product.mainImage}`}
-                  alt={`Image of ${item.title}`}
-                  width={100}
-                  height={100}
-                />
-              </Grid>
-              <Grid xs={3} item>
-                {item.title}
+
+        <Grid container columnSpacing={4}>
+          <Grid item xs={8}>
+            <Grid container sx={{ fontWeight: "bold" }}>
+              <Grid xs={6} item>
+                Item
               </Grid>
               <Grid xs={2} item>
-                {item.size}
+                Size
               </Grid>
               <Grid xs={2} item>
-                <CartControlButtons
-                  size={item.size}
-                  productId={item.product.id}
-                >
-                  {item.quantity}
-                </CartControlButtons>
+                Qut
               </Grid>
               <Grid xs={2} item>
-                {item.price} €
+                Price
               </Grid>
             </Grid>
-          </>
-        ))}
+            {userStore.cart?.map((item, index) => (
+              <>
+                <Divider sx={{ backgroundColor: "#cacdd8", my: 2 }} />
+                <Grid container key={index} alignItems="center">
+                  <Grid xs={3} item>
+                    <Image
+                      src={`${process.env.API_URL_IMAGES}/${item.product.mainImage}`}
+                      alt={`Image of ${item.title}`}
+                      width={100}
+                      height={100}
+                    />
+                  </Grid>
+                  <Grid xs={3} item>
+                    {item.title}
+                  </Grid>
+                  <Grid xs={2} item>
+                    {item.size}
+                  </Grid>
+                  <Grid xs={2} item>
+                    <CartControlButtons
+                      size={item.size}
+                      productId={item.product.id}
+                    >
+                      {item.quantity}
+                    </CartControlButtons>
+                  </Grid>
+                  <Grid xs={2} item>
+                    {Math.round(item.price)} €
+                  </Grid>
+                </Grid>
+              </>
+            ))}
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h4" fontSize={22} textAlign="left">
+              Summary
+            </Typography>
+            <Divider sx={{ backgroundColor: "#cacdd8", my: 2 }} />
+            <Stack direction="row" justifyContent="space-between">
+              <span>Order Total</span>
+              <span>{totalPrice} €</span>
+            </Stack>
+
+            <LoadingBtn sx={{ width: "100%" }}>Proceed to Checkout</LoadingBtn>
+          </Grid>
+        </Grid>
       </MainContainer>
     </MainWrapper>
   );
