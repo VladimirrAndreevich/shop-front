@@ -180,7 +180,12 @@ const CartPage: React.FC = () => {
               </Stack>
             </Stack>
 
-            <LoadingBtn sx={{ width: "100%", mt: 2 }}>
+            <LoadingBtn
+              sx={{ width: "100%", mt: 2 }}
+              clickHandler={() => {
+                router.push("/user/order");
+              }}
+            >
               Proceed to Checkout
             </LoadingBtn>
           </Grid>
