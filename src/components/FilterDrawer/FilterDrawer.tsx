@@ -74,7 +74,7 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
       max: number;
       color?: string;
     } = { min: value[0], max: value[1] };
-    if (indexColor) {
+    if (indexColor !== undefined) {
       body.color = colors[indexColor];
       console.log(body);
     }
@@ -93,7 +93,7 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
   const reset = async () => {
     setValue([100, 5000]);
     setIndexColor(undefined);
-    getProductByFilter();
+    // getProductByFilter();
 
     const response: I_ProductsByTypeRes = await axios
       .get(`${process.env.API_URL_BACKEND}/products/by-type?type=${typeShoes}`)
@@ -101,6 +101,10 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
 
     setProducts(response.data.products);
     setAmount(response.data.amount);
+
+    setProducts(response.data.products);
+    setAmount(response.data.amount);
+    setOpen(false);
   };
 
   const filterContent = (
