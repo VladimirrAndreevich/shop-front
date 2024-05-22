@@ -159,7 +159,7 @@ const CartPage: React.FC = () => {
                 justifyContent="space-between"
               >
                 <span>Subtotal </span>
-                <span>{subtotal} €</span>
+                <span>{subtotal?.toFixed(2)} €</span>
               </Stack>
               <Stack
                 component={Typography}
@@ -167,7 +167,7 @@ const CartPage: React.FC = () => {
                 justifyContent="space-between"
               >
                 <span>Discount </span>
-                <span>{totalDiscount} €</span>
+                <span>{totalDiscount?.toFixed(2)} €</span>
               </Stack>
               <Stack
                 component={Typography}
@@ -176,7 +176,7 @@ const CartPage: React.FC = () => {
                 fontWeight="bold"
               >
                 <span>Order Total</span>
-                <span>{totalPrice} €</span>
+                <span>{totalPrice?.toFixed(2)} €</span>
               </Stack>
             </Stack>
 

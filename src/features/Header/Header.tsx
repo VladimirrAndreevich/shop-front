@@ -60,16 +60,16 @@ const Header: React.FC = observer(() => {
                   </Link>
                 )}
                 {userStore.isLogged && (
-                  <>
-                    {/* <Link href="/user/favorites">
+                  <Stack direction="row" spacing={2}>
+                    <Link href="/user/orderslist">
                       <Image
-                        src="/icons/star.svg"
+                        src="/icons/user.svg"
                         alt="The icon of a star"
                         width={20}
                         height={25}
                         priority
                       />
-                    </Link> */}
+                    </Link>
                     <Link href="/user/cart">
                       <Badge
                         badgeContent={userStore.totalCartItems}
@@ -83,19 +83,13 @@ const Header: React.FC = observer(() => {
                           priority
                         />
                       </Badge>
-                      {/* <Image
-                        src="/icons/cart.svg"
-                        alt="The icon of a cart"
-                        width={20}
-                        height={25}
-                        priority
-                      /> */}
                     </Link>
                     <div
                       onClick={() => {
                         userStore.logout();
                         router.push("/");
                       }}
+                      style={{ cursor: "pointer" }}
                     >
                       <LogoutIcon
                         sx={{ color: "white" }}
@@ -103,7 +97,7 @@ const Header: React.FC = observer(() => {
                         // height={25}
                       />
                     </div>
-                  </>
+                  </Stack>
                 )}
               </Stack>
             </Grid>

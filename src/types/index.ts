@@ -28,6 +28,25 @@ export interface I_CartItem {
   };
 }
 
+export enum E_OrderStatus {
+  created = "created",
+  declined = "declined",
+  confirmed = "confirmed",
+}
+
+export interface I_Order {
+  id: number;
+  nameFirst: string;
+  nameSecond: string;
+  country: string;
+  address: string;
+  postalCode: number;
+  phoneNumber: number;
+  status: E_OrderStatus;
+  cart: I_CartItem[];
+  createdAt: Date;
+}
+
 export interface I_UniRes {
   status: "ok" | "error";
   data?: any;

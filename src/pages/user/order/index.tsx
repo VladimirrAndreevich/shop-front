@@ -35,7 +35,7 @@ const OrderPage: React.FC = () => {
       phonePhone: +userInput.phoneNumber,
     };
 
-    console.log(body);
+    // console.log(body);
 
     const config = {
       headers: {
