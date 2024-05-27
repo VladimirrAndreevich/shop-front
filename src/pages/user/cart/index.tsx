@@ -1,4 +1,3 @@
-import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { EmptyButton, EmptyDescription, EmptyHeading } from "./styled";
 import Image from "next/image";
 import { ImageDecor } from "@/components/ImageDecor/ImageDecor";
@@ -40,9 +39,13 @@ const CartPage: React.FC = () => {
     userStore.isLogged
   ) {
     return (
-      <MainWrapper>
+      <main>
         <MainContainer
-          sx={{ py: { xs: 3, md: 4, lg: 8 }, textAlign: "center" }}
+          sx={{
+            py: { xs: 3, md: 4, lg: 8 },
+            textAlign: "center",
+            minHeight: "calc(100vh - 184px)",
+          }}
           maxWidth="xl"
         >
           <SectionHeading>Cart of goods</SectionHeading>
@@ -67,7 +70,7 @@ const CartPage: React.FC = () => {
             </EmptyButton>
           </Box>
         </MainContainer>
-      </MainWrapper>
+      </main>
     );
   }
 
@@ -89,9 +92,13 @@ const CartPage: React.FC = () => {
   // console.log(userStore.cart[0].discount);
 
   return (
-    <MainWrapper>
+    <main>
       <MainContainer
-        sx={{ py: { xs: 3, md: 4, lg: 8 }, textAlign: "center" }}
+        sx={{
+          py: { xs: 3, md: 4, lg: 8 },
+          textAlign: "center",
+          minHeight: "calc(100vh - 184px)",
+        }}
         maxWidth="xl"
       >
         <SectionHeading>Cart of goods</SectionHeading>
@@ -191,7 +198,7 @@ const CartPage: React.FC = () => {
           </Grid>
         </Grid>
       </MainContainer>
-    </MainWrapper>
+    </main>
   );
 };
 

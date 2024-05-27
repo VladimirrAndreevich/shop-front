@@ -64,7 +64,10 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <MainContainer sx={{ py: { xs: 3, md: 4, lg: 8 } }} maxWidth="sm">
+    <MainContainer
+      sx={{ py: { xs: 3, md: 4, lg: 8, minHeight: "calc(100vh - 184px)" } }}
+      maxWidth="sm"
+    >
       <Heading>Login</Heading>
       <Form onSubmit={submitHandler}>
         <Input

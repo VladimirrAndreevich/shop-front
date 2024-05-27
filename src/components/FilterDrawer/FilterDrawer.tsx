@@ -76,7 +76,7 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
     } = { min: value[0], max: value[1] };
     if (indexColor !== undefined) {
       body.color = colors[indexColor];
-      console.log(body);
+      // console.log(body);
     }
     const response: I_ProductsByTypeRes = await axios
       .post(
