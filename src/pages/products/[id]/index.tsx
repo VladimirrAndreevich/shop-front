@@ -19,6 +19,8 @@ import {
 import Btn from "@/components/Btn/Btn";
 import LoadingBtn from "@/components/LoadingBtn/LoadingBtn";
 import { useRouter } from "next/router";
+import BreadcrumbsComp from "@/BreadcrumbsComp/BreadcrumbsComp";
+import { breadcrumbsPaths } from "@/types/path";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {
@@ -61,8 +63,13 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
     ) !== undefined;
 
   return (
-    <MainWrapper>
-      <MainContainer maxWidth="lg" sx={{ py: { md: 3, lg: 4 } }}>
+    <main>
+      <MainContainer
+        maxWidth="lg"
+        sx={{ py: 1, minHeight: "calc(100vh - 184px)" }}
+      >
+        <BreadcrumbsComp crumbs={breadcrumbsPaths.detail} />
+
         {!isLargeSmViewport && (
           <Typography variant="h2" fontSize="40px">
             {title}
@@ -162,7 +169,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
           </Grid>
         </Grid>
       </MainContainer>
-    </MainWrapper>
+    </main>
   );
 };
 

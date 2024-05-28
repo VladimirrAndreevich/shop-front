@@ -1,4 +1,3 @@
-import { MainWrapper } from "@/components/MainWrapper/MainWrapper";
 import { E_Type, I_ProductCard, I_ProductsByTypeRes } from "@/types";
 import { GetStaticPaths, GetStaticProps } from "next";
 import ProductItem from "@/components/ProductItem/ProductItem";
@@ -6,6 +5,8 @@ import MainContainer from "@/components/MainContainer/MainContainer";
 import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import FilterDrawer from "@/components/FilterDrawer/FilterDrawer";
 import { useState } from "react";
+import BreadcrumbsComp from "@/BreadcrumbsComp/BreadcrumbsComp";
+import { breadcrumbsPaths } from "@/types/path";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -102,8 +103,10 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
 
   if (isLargeViewport) {
     return (
-      <MainWrapper>
-        <MainContainer sx={{ py: { md: 3, lg: 4 } }}>
+      <main>
+        <MainContainer sx={{ py: { xs: 1 } }}>
+          <BreadcrumbsComp crumbs={breadcrumbsPaths.catalog} />
+
           <Grid container columnSpacing={3}>
             <Grid item lg={3}>
               <FilterDrawer
@@ -118,14 +121,18 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
             </Grid>
           </Grid>
         </MainContainer>
-      </MainWrapper>
+      </main>
     );
   }
 
   return (
-    <MainWrapper>
-      <MainContainer sx={{ py: { md: 3, lg: 4 } }}>{mainContent}</MainContainer>
-    </MainWrapper>
+    <main>
+      <MainContainer sx={{ py: { xs: 1, md: 3, lg: 4 } }}>
+        <BreadcrumbsComp crumbs={breadcrumbsPaths.catalog} />
+
+        {mainContent}
+      </MainContainer>
+    </main>
   );
 };
 
