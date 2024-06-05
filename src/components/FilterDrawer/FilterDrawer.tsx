@@ -18,6 +18,7 @@ const colors = ["green", "black", "gray", "blue", "yellow", "orange"];
 type FilterDrawerProps = {
   typeShoes: E_Type;
   setProducts: Dispatch<SetStateAction<I_ProductCard[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
   isLargeViewport?: boolean;
   skip?: number;
   take?: number;
@@ -58,6 +59,7 @@ const theme = createTheme({
 const FilterDrawer: React.FC<FilterDrawerProps> = ({
   typeShoes,
   setProducts,
+  setLoading,
   isLargeViewport,
   skip,
   take,
@@ -71,6 +73,9 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
   };
 
   const getProductByFilter = async () => {
+    setLoading(true);
+    setOpen(false);
+
     const body: {
       min: number;
       max: number;
@@ -91,13 +96,13 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
       .then((response) => response.data);
 
     setProducts(response.data.products);
-
-    setOpen(false);
+    setLoading(false);
   };
 
   const reset = async () => {
     setValue([100, 5000]);
     setIndexColor(undefined);
+    setLoading(true);
 
     let additionalQueryParams = "";
     if (skip !== undefined && take !== undefined) {
@@ -109,11 +114,9 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
       .post(path)
       .then((response) => response.data);
 
-    setProducts(response.data.products);
-
-    setProducts(response.data.products);
-
     setOpen(false);
+    setLoading(false);
+    setProducts(response.data.products);
   };
 
   const filterContent = (

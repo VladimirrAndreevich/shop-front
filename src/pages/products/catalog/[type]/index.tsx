@@ -81,6 +81,7 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
   const theme = useTheme();
   const isLargeViewport = useMediaQuery(theme.breakpoints.up("lg"));
   const { typeShoes } = props;
+  const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
   const handleChange = async (event: ChangeEvent<unknown>, value: number) => {
@@ -88,9 +89,10 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
 
     const skip = value === 1 ? 0 : (value - 1) * take;
 
-    setProducts([]);
+    setLoading(true);
     const formattedResponse = await getProducts(typeShoes, skip, take);
     setProducts(formattedResponse.products);
+    setLoading(false);
   };
 
   let titleText: string;
@@ -119,6 +121,7 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
 
       {!isLargeViewport && (
         <FilterDrawer
+          setLoading={setLoading}
           take={take}
           skip={page === 1 ? 0 : (page - 1) * take}
           typeShoes={typeShoes}
@@ -127,19 +130,19 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
       )}
 
       <Grid container spacing="20px" mt={1}>
-        {products && products.length > 0
-          ? products.map((item, index) => (
-              <Grid item xs={6} md={4} key={index}>
-                <ProductItem data={item} />
-              </Grid>
-            ))
-          : Array(take)
+        {loading
+          ? Array(take)
               .fill(null)
               .map((_, index) => (
                 <Grid item xs={6} md={4} key={index}>
                   <ProductItemSkeleton />
                 </Grid>
-              ))}
+              ))
+          : products.map((item, index) => (
+              <Grid item xs={6} md={4} key={index}>
+                <ProductItem data={item} />
+              </Grid>
+            ))}
       </Grid>
     </>
   );
@@ -153,6 +156,7 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
           <Grid container columnSpacing={3}>
             <Grid item lg={3}>
               <FilterDrawer
+                setLoading={setLoading}
                 take={take}
                 skip={page === 1 ? 0 : (page - 1) * take}
                 typeShoes={typeShoes}
