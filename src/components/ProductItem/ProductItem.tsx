@@ -44,27 +44,6 @@ const ProductItem: React.FC<I_ProductItemProps> = ({ data }) => {
             {title}
           </Typography>
 
-          {/* <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ color: "#3C3C3C", fontSize: "16px" }}
-          >
-            {Math.ceil(price)} $
-          </Typography>
-          {priceDiscounted && (
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              component="span"
-              sx={{
-                color: "#3C3C3C",
-                textDecoration: "line-through",
-                fontSize: "12px",
-              }}
-            >
-              {Math.ceil(priceDiscounted)} $
-            </Typography>
-          )} */}
           <Stack direction="row" spacing="10px" alignItems="center">
             <Typography
               variant="body1"

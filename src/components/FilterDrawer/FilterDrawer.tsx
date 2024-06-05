@@ -18,8 +18,9 @@ const colors = ["green", "black", "gray", "blue", "yellow", "orange"];
 type FilterDrawerProps = {
   typeShoes: E_Type;
   setProducts: Dispatch<SetStateAction<I_ProductCard[]>>;
-  setAmount: Dispatch<SetStateAction<number>>;
   isLargeViewport?: boolean;
+  skip?: number;
+  take?: number;
 };
 
 declare module "@mui/material/styles" {
@@ -57,8 +58,9 @@ const theme = createTheme({
 const FilterDrawer: React.FC<FilterDrawerProps> = ({
   typeShoes,
   setProducts,
-  setAmount,
   isLargeViewport,
+  skip,
+  take,
 }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<number[]>([100, 5000]);
@@ -78,32 +80,39 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({
       body.color = colors[indexColor];
       // console.log(body);
     }
+
+    let additionalQueryParams = "";
+    if (skip !== undefined && take !== undefined) {
+      additionalQueryParams = `&skip=${skip}&take=${take}`;
+    }
+    const path = `${process.env.API_URL_BACKEND}/products/by-type?type=${typeShoes}${additionalQueryParams}`;
     const response: I_ProductsByTypeRes = await axios
-      .post(
-        `${process.env.API_URL_BACKEND}/products/by-type?type=${typeShoes}`,
-        body
-      )
+      .post(path, body)
       .then((response) => response.data);
 
     setProducts(response.data.products);
-    setAmount(response.data.amount);
+
     setOpen(false);
   };
 
   const reset = async () => {
     setValue([100, 5000]);
     setIndexColor(undefined);
-    // getProductByFilter();
+
+    let additionalQueryParams = "";
+    if (skip !== undefined && take !== undefined) {
+      additionalQueryParams = `&skip=${skip}&take=${take}`;
+    }
+    const path = `${process.env.API_URL_BACKEND}/products/by-type?type=${typeShoes}${additionalQueryParams}`;
 
     const response: I_ProductsByTypeRes = await axios
-      .get(`${process.env.API_URL_BACKEND}/products/by-type?type=${typeShoes}`)
+      .post(path)
       .then((response) => response.data);
 
     setProducts(response.data.products);
-    setAmount(response.data.amount);
 
     setProducts(response.data.products);
-    setAmount(response.data.amount);
+
     setOpen(false);
   };
 
