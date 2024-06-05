@@ -27,9 +27,15 @@ const Header: React.FC = observer(() => {
           }}
         >
           <Grid container spacing={0}>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}>
-              <Box display="flex" justifyContent="center">
+            <Grid item xs={4} display={{ sm: "none" }}></Grid>
+            <Grid item xs={4} sm={8}>
+              <Box
+                display="flex"
+                justifyContent={{
+                  sx: "center",
+                  sm: "start",
+                }}
+              >
                 <Link href="/">
                   <Image
                     src="/logo.svg"
