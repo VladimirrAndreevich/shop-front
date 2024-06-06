@@ -66,7 +66,7 @@ const ProductDetailPage: React.FC<I_ProductDetailPageProps> = (props) => {
     <main>
       <MainContainer
         maxWidth="lg"
-        sx={{ py: 1, minHeight: "calc(100vh - 184px)" }}
+        sx={{ pb: 4, minHeight: "calc(100vh - 184px)" }}
       >
         <BreadcrumbsComp crumbs={breadcrumbsPaths.detail} />
 
