@@ -1,7 +1,7 @@
 import OrderItem from "@/OrderItem/OrderItem";
 import { getStoreInstance } from "@/store/user-store";
 import { I_Order } from "@/types";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
@@ -34,6 +34,10 @@ const Orders: React.FC = () => {
 
   if (isLoading) {
     return <p>Loading...</p>;
+  }
+
+  if (orders.length === 0) {
+    return <Typography mt={1.2}>The list of orders is empty!</Typography>;
   }
 
   return (

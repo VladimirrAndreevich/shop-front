@@ -4,7 +4,10 @@ import { Typography } from "@mui/material";
 
 const OrdersList: React.FC = () => {
   return (
-    <MainContainer sx={{ py: { xs: 3, md: 4, lg: 8 } }} maxWidth="lg">
+    <MainContainer
+      sx={{ py: { xs: 3, md: 4, lg: 8 }, minHeight: "calc(100vh - 184px)" }}
+      maxWidth="lg"
+    >
       <Typography variant="h2" fontSize={35}>
         Your orders
       </Typography>
