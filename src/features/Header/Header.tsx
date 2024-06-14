@@ -32,7 +32,7 @@ const Header: React.FC = observer(() => {
               <Box
                 display="flex"
                 justifyContent={{
-                  sx: "center",
+                  xs: "center",
                   sm: "start",
                 }}
               >
