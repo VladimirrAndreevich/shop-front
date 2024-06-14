@@ -150,7 +150,7 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
   if (isLargeViewport) {
     return (
       <main>
-        <MainContainer sx={{ py: { xs: 1 } }}>
+        <MainContainer sx={{ py: { xs: 1 }, minHeight: "calc(100vh - 184px)" }}>
           <BreadcrumbsComp crumbs={breadcrumbsPaths.catalog} />
 
           <Grid container columnSpacing={3}>
@@ -189,7 +189,9 @@ const CatalogPage: React.FC<CatalogPageProps> = (props) => {
 
   return (
     <main>
-      <MainContainer sx={{ py: { xs: 1, md: 3, lg: 4 } }}>
+      <MainContainer
+        sx={{ py: { xs: 1, md: 3, lg: 4 }, minHeight: "calc(100vh - 184px)" }}
+      >
         <BreadcrumbsComp crumbs={breadcrumbsPaths.catalog} />
 
         {mainContent}

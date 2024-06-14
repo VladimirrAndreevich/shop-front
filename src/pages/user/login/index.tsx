@@ -16,11 +16,18 @@ const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const userStore = getStoreInstance();
 
   const submitHandler = async () => {
     setIsSubmitting(true);
+
+    if (email === "" || password === "") {
+      setErrorMessage("Enter all inputs");
+      setIsSubmitting(false);
+      return;
+    }
 
     const sendData = {
       email,
@@ -38,6 +45,7 @@ const LoginPage: React.FC = () => {
     if (!response.ok) {
       // throw new Error(`HTTP error! status: ${response.status}`)
       console.error(`HTTP error! status: ${response.status}`);
+      setErrorMessage("Incorrect email or password");
     } else {
       const formattedRes: I_LoginRes = await response.json();
       if (formattedRes.data.accessToken) {
@@ -96,9 +104,17 @@ const LoginPage: React.FC = () => {
         </LoadingBtn>
       </Form>
       <Typography
-        component="div"
-        sx={{ textAlign: "center", mt: { xs: "6px", md: "8px", lg: "12px" } }}
+        color="red"
+        textAlign="center"
+        sx={{
+          transition: "opacity 2s ease",
+          opacity: errorMessage === "" ? 0 : 1,
+          mt: "7px",
+        }}
       >
+        {errorMessage} &nbsp;
+      </Typography>
+      <Typography component="div" sx={{ textAlign: "center", mt: "4px" }}>
         I haven't any account. <Link href="/user/register">Register</Link>
       </Typography>
     </MainContainer>

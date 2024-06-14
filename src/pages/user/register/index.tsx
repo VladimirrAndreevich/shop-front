@@ -18,13 +18,19 @@ const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const userStore = getStoreInstance();
 
   const submitHandler = async () => {
     setIsSubmitting(true);
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      setErrorMessage("Passwords do not match.");
+      setIsSubmitting(false);
+      return;
+    } else if (!email) {
+      setErrorMessage("Fill the email field.");
+      setIsSubmitting(false);
       return;
     }
     console.log("Submit", { email, password });
@@ -48,7 +54,10 @@ const RegisterPage: React.FC = () => {
 
     if (!response.ok) {
       // throw new Error(`HTTP error! status: ${response.status}`)
-      console.error(`HTTP error! status: ${response.status}`);
+      console.error(`HTTP error! status: ${response}`);
+      const formattedRes: { status: string; message: string } =
+        await response.json();
+      setErrorMessage(formattedRes.message);
     } else {
       const formattedRes: I_RegisterRes = await response.json();
       console.log(formattedRes);
@@ -115,6 +124,17 @@ const RegisterPage: React.FC = () => {
           Register
         </LoadingBtn>
       </Form>
+      <Typography
+        color="red"
+        textAlign="center"
+        sx={{
+          transition: "opacity 2s ease",
+          opacity: errorMessage === "" ? 0 : 1,
+          mt: "7px",
+        }}
+      >
+        {errorMessage} &nbsp;
+      </Typography>
       <Typography
         component="div"
         sx={{ textAlign: "center", mt: { xs: "6px", md: "8px", lg: "12px" } }}
